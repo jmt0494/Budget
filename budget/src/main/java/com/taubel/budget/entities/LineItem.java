@@ -31,5 +31,4 @@ public class LineItem {
     @Column(name = "budgeted_amount")
     private double budgetedAmount;
 
-    // Constructors, getters, and setters
 }

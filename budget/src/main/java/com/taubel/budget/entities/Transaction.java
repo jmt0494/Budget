@@ -30,6 +30,5 @@ public class Transaction {
 
     private String description;
 
-    // Constructors, getters, and setters
 }
 

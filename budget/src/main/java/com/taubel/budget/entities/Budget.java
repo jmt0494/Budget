@@ -26,5 +26,4 @@ public class Budget {
 
     private LocalDate month;
 
-    // Constructors, getters, and setters
 }

@@ -25,6 +25,6 @@ public class User {
 
     private String password;
 
-    // Constructors, getters, and setters
+
 }
 
