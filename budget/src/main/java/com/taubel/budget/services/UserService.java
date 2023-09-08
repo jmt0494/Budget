@@ -27,4 +27,10 @@ public class UserService {
         else return null;
 
     }
+
+    public UserDto register(User user) {
+        User newUser = userRepository.save(user);
+        UserDto userDto = new UserDto(newUser);
+        return userDto;
+    }
 }
