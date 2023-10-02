@@ -2,12 +2,11 @@ package com.taubel.budget.services;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.taubel.budget.dtos.UserDto;
 import com.taubel.budget.entities.User;
-import com.taubel.budget.exceptions.UsernameNotFoundException;
+import com.taubel.budget.exceptions.UserAlreadyExistsException;
 import com.taubel.budget.repos.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -28,9 +27,11 @@ public class UserService {
 
     }
 
-    public UserDto register(User user) {
-        User newUser = userRepository.save(user);
-        UserDto userDto = new UserDto(newUser);
-        return userDto;
+    public UserDto register(User user) throws UserAlreadyExistsException {
+        Optional<User> newUser = userRepository.findByUsername(user.getUsername());
+        if (newUser.isPresent()) throw new UserAlreadyExistsException("Username Already Exists"); 
+        newUser = userRepository.findByEmail(user.getEmail());
+        if (newUser.isPresent()) throw new UserAlreadyExistsException("Email Already Exists");
+        return new UserDto(userRepository.save(user));
     }
 }
