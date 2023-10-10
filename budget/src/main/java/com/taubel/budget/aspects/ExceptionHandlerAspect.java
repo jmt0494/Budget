@@ -16,4 +16,9 @@ public class ExceptionHandlerAspect {
     public ResponseEntity<Object> UserAlreadyExistsHandler(HttpServletRequest request, UserAlreadyExistsException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
+
+        @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Object> IllegalArgumentExceptionHandler(HttpServletRequest request, IllegalArgumentException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 }

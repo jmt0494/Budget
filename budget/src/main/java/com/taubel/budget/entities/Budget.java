@@ -1,7 +1,9 @@
 package com.taubel.budget.entities;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+
+import com.taubel.budget.enums.Month;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +17,7 @@ import lombok.Setter;
 @Table(name = "Budgets")
 public class Budget {
 
+   
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "budget_id")
@@ -24,6 +27,11 @@ public class Budget {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private LocalDate month;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "month", nullable = false)
+    private Month month;
+
+    @Column(name = "year", nullable = false)
+    private int year;
 
 }
