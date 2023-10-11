@@ -10,25 +10,31 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor@Entity
+@NoArgsConstructor
+@Entity
 @Table(name = "Transactions")
 public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_id")
-    private Long transactionId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "line_item_id")
     private LineItem lineItem;
 
-    @Column(name = "transaction_date")
+    @Column(name = "transaction_date", nullable = false)
     private LocalDate transactionDate;
 
+    @Column(name = "amount", nullable = false)
     private double amount;
 
-    private String description;
+    @Column(name = "merchant", length = 30)
+    private String merchant;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }
-

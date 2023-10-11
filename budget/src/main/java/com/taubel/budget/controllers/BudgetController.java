@@ -19,17 +19,17 @@ public class BudgetController {
     //All methods will alter the budget as well as any dependent data (category, LineItem, Transaction)
     
     @GetMapping()
-    ResponseEntity<Budget> getBudget(@PathVariable("username") String username, @PathVariable("month") String month, @PathVariable("year") String year) {
+    ResponseEntity<Budget> getBudget(@PathVariable("username") String username, @PathVariable("month") String month, @PathVariable("year") int year) {
         return ResponseEntity.ok(new Budget()); //TODO retrieve from database
     }
     
     @PostMapping()
-    ResponseEntity<Budget> createBudget(@PathVariable("username") String username, @PathVariable("month") String month, @PathVariable("year") String year) {
+    ResponseEntity<Budget> createBudget(@PathVariable("username") String username, @PathVariable("month") String month, @PathVariable("year") int year) {
         return ResponseEntity.ok(new Budget()); //TODO
     }
 
     @DeleteMapping()
-    ResponseEntity<Budget> deleteBudget(@PathVariable("username") String username, @PathVariable("month") String month, @PathVariable("year") String year) {
+    ResponseEntity<Budget> deleteBudget(@PathVariable("username") String username, @PathVariable("month") String month, @PathVariable("year") int year) {
         return ResponseEntity.ok(null); //TODO
     }
 
