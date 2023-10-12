@@ -34,18 +34,18 @@ public class TransactionController {
 
     @PostMapping()
     public ResponseEntity<Transaction> createNewTransaction(@RequestBody Transaction trans) {   
-        return ResponseEntity.ok(new Transaction()); //TODO
+        return ResponseEntity.ok(transService.createNewTransaction(trans));
     }
 
     @PutMapping()
     public ResponseEntity<Transaction> updateTransaction(@RequestBody Transaction trans) {
-        return ResponseEntity.ok(new Transaction()); //TODO
+        return ResponseEntity.ok(transService.updateTransaction(trans));
     }
 
-    @DeleteMapping("/{transaction}")
-    public ResponseEntity<Integer> deleteTransaction(@PathVariable("transaction") int transId) {
-        return ResponseEntity.ok(null); //TODO
-    }
+    // @DeleteMapping("/{transaction}")
+    // public void deleteTransaction(@PathVariable("transaction") int transId) {
+    //      transService.deleteTransaction(transId);
+    // }
 
     
 }
