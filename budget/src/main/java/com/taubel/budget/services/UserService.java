@@ -20,11 +20,11 @@ public class UserService {
     private UserRepository userRepository;
     private PasswordEncoder encoder;
 
-    public UserDto getUserByUsername(String username) {
+    public User getUserByUsername(String username) {
 
         Optional<User> user = userRepository.findByUsername(username);
         
-        if (user.isPresent()) return new UserDto(user.get());
+        if (user.isPresent()) return user.get();
         else throw new UsernameNotFoundException(username + "not found");
 
     }

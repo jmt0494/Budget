@@ -24,7 +24,8 @@ public class UserController {
     @GetMapping(value = "/{username}")
     @PreAuthorize("#username == authentication.principal.username")
     public ResponseEntity<UserDto> user(@PathVariable("username") String username) {
-        return ResponseEntity.ok(userService.getUserByUsername(username));
+        User user = userService.getUserByUsername(username);
+        return ResponseEntity.ok(new UserDto(user));
     }
 
     @PostMapping(value = "/register")
