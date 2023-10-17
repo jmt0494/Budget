@@ -24,11 +24,13 @@ public class LineItem {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    private String name;
+    @ManyToOne  
+    @JoinColumn(name = "user_id")
+    private User user;  
 
-    private String description;
+    private String name;
 
     @Column(name = "budgeted_amount")
     private double budgetedAmount;
-
 }
+
