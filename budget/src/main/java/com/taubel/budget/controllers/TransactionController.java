@@ -32,14 +32,16 @@ public class TransactionController {
         return ResponseEntity.ok(transService.findUnassigedTransactions(username));
     }
 
-    @PostMapping()
-    public ResponseEntity<Transaction> createNewTransaction(@RequestBody Transaction trans) {   
-        return ResponseEntity.ok(transService.createNewTransaction(trans));
+    @PostMapping("/{username}")
+    @PreAuthorize("#username == authentication.principal.username")
+    public ResponseEntity<Transaction> createNewTransaction(@RequestBody Transaction trans, @PathVariable("username") String username) {   
+        return ResponseEntity.ok(transService.createNewTransaction(trans, username));
     }
 
-    @PutMapping()
-    public ResponseEntity<Transaction> updateTransaction(@RequestBody Transaction trans) {
-        return ResponseEntity.ok(transService.updateTransaction(trans));
+    @PutMapping("/{username}")
+    @PreAuthorize("#username == authentication.principal.username")
+    public ResponseEntity<Transaction> updateTransaction(@RequestBody Transaction trans, @PathVariable("username") String username) {
+        return ResponseEntity.ok(transService.updateTransaction(trans, username));
     }
 
     // @DeleteMapping("/{transaction}")

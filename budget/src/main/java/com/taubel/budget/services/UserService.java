@@ -38,4 +38,8 @@ public class UserService {
         user.setPassword(encoder.encode(user.getPassword()));
         return new UserDto(userRepository.save(user));
     }
+
+    protected boolean UserMatchesURL(String UrlUsername, User user) {
+        return UrlUsername == user.getUsername();
+    }
 }

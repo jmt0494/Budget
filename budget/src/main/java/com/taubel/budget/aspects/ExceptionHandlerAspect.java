@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.taubel.budget.exceptions.TransactionAlreadyExistsException;
 import com.taubel.budget.exceptions.TransactionDoesNotExistException;
 import com.taubel.budget.exceptions.UserAlreadyExistsException;
+import com.taubel.budget.exceptions.UserNotAllowedException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -32,5 +33,10 @@ public class ExceptionHandlerAspect {
     @ExceptionHandler(TransactionDoesNotExistException.class)
     public ResponseEntity<Object> TransactionDoesNotExistHandler(HttpServletRequest request, TransactionDoesNotExistException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(UserNotAllowedException.class)
+    public ResponseEntity<Object> UserNotAllowedHandler(HttpServletRequest request, UserNotAllowedException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
     }
 }
