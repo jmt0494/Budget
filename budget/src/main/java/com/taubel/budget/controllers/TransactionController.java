@@ -44,10 +44,11 @@ public class TransactionController {
         return ResponseEntity.ok(transService.updateTransaction(trans, username));
     }
 
-    // @DeleteMapping("/{transaction}")
-    // public void deleteTransaction(@PathVariable("transaction") int transId) {
-    //      transService.deleteTransaction(transId);
-    // }
+    @DeleteMapping("/{transaction}")
+    public ResponseEntity<Transaction> deleteTransaction(@PathVariable("transaction") int transId) {
+         transService.deleteTransaction(transId);
+         return ResponseEntity.ok(null);
+    }
 
     
 }

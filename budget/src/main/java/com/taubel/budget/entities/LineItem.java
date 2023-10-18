@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "LineItems")
+@Table(name = "Line_Items")
 public class LineItem {
 
     @Id

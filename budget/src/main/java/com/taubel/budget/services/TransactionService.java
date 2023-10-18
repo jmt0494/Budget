@@ -1,12 +1,14 @@
 package com.taubel.budget.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.taubel.budget.entities.Transaction;
 import com.taubel.budget.entities.User;
+import com.taubel.budget.exceptions.DeletionFialedException;
 import com.taubel.budget.exceptions.TransactionAlreadyExistsException;
 import com.taubel.budget.exceptions.TransactionDoesNotExistException;
 import com.taubel.budget.exceptions.UserNotAllowedException;
@@ -44,9 +46,11 @@ public class TransactionService {
     }
 
     
-    //     public void deleteTransaction(long transId) {
-        //         transRepo.deleteById(transId);
-        //     }
+        public void deleteTransaction(long transId) {
+                 transRepo.deleteById(transId);
+                 Optional<Transaction> deletedTrans = transRepo.findById(transId);
+                 if (deletedTrans.isPresent()) throw new DeletionFialedException("Failed to delete transaction " + transId);
+            }
 
 
 }
