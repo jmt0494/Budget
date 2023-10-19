@@ -18,7 +18,7 @@ public class LineItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "line_item_id")
-    private Long lineItemId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
