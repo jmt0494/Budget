@@ -40,6 +40,8 @@ public class UserService {
     }
 
     protected boolean UserMatchesURL(String UrlUsername, User user) {
-        return UrlUsername == user.getUsername();
+        String username = user.getUsername();
+        boolean output = UrlUsername.equals(username);
+        return output;
     }
 }

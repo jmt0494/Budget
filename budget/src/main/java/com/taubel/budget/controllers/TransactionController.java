@@ -20,33 +20,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/transaction")
+@RequestMapping("/{username}/transaction")
+@PreAuthorize("#username == authentication.principal.username")
 public class TransactionController {
 
     @Autowired
     private TransactionService transService;
     
-    @GetMapping("/{username}/unassigned")
-    @PreAuthorize("#username == authentication.principal.username")
+    @GetMapping("/unassigned")
     public ResponseEntity<List<Transaction>> getUnassignedTransactions(@PathVariable("username") String username) {
         return ResponseEntity.ok(transService.findUnassigedTransactions(username));
     }
 
-    @PostMapping("/{username}")
-    @PreAuthorize("#username == authentication.principal.username")
+    @PostMapping()
     public ResponseEntity<Transaction> createNewTransaction(@RequestBody Transaction trans, @PathVariable("username") String username) {   
         return ResponseEntity.ok(transService.createNewTransaction(trans, username));
     }
 
-    @PutMapping("/{username}")
-    @PreAuthorize("#username == authentication.principal.username")
+    @PutMapping()
     public ResponseEntity<Transaction> updateTransaction(@RequestBody Transaction trans, @PathVariable("username") String username) {
         return ResponseEntity.ok(transService.updateTransaction(trans, username));
     }
 
     @DeleteMapping("/{transaction}")
-    public ResponseEntity<Transaction> deleteTransaction(@PathVariable("transaction") int transId) {
-         transService.deleteTransaction(transId);
+    public ResponseEntity<Transaction> deleteTransaction(@PathVariable("transaction") long transId, @PathVariable("username") String username) {
+         transService.deleteTransaction(transId, username);
          return ResponseEntity.ok(null);
     }
 

@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.taubel.budget.exceptions.DeletionFialedException;
 import com.taubel.budget.exceptions.TransactionAlreadyExistsException;
 import com.taubel.budget.exceptions.TransactionDoesNotExistException;
 import com.taubel.budget.exceptions.UserAlreadyExistsException;
@@ -41,8 +40,4 @@ public class ExceptionHandlerAspect {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
     }
 
-    @ExceptionHandler(DeletionFialedException.class)
-    public ResponseEntity<Object> DeletionFialedHandler (HttpServletRequest request, DeletionFialedException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
-    }
 }
