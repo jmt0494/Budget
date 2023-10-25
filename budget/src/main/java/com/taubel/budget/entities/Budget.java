@@ -2,6 +2,8 @@ package com.taubel.budget.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 import com.taubel.budget.enums.Month;
 
 import lombok.AllArgsConstructor;
@@ -33,5 +35,8 @@ public class Budget {
 
     @Column(name = "year", nullable = false)
     private int year;
+
+    @OneToMany(mappedBy = "budget", fetch = FetchType.LAZY)
+    private List<Category> categories;
 
 }

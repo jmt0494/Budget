@@ -1,6 +1,8 @@
 package com.taubel.budget.entities;
 
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +21,14 @@ public class LineItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "line_item_id")
     private Long id;
+    
+    private String name;
+
+    @Column(name = "budgeted_amount")
+    private double budgetedAmount;
+
+    @OneToMany(mappedBy = "lineItem", fetch = FetchType.LAZY)
+    private List<Transaction> transactions;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -28,9 +38,5 @@ public class LineItem {
     @JoinColumn(name = "user_id")
     private User user;  
 
-    private String name;
-
-    @Column(name = "budgeted_amount")
-    private double budgetedAmount;
 }
 

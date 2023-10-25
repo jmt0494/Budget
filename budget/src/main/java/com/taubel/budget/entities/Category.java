@@ -1,5 +1,7 @@
 package com.taubel.budget.entities;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +21,8 @@ public class Category {
     @Column(name = "category_id")
     private Long id;
 
+    private String name;
+
     @ManyToOne
     @JoinColumn(name = "budget_id")
     private Budget budget;
@@ -27,5 +31,6 @@ public class Category {
     @JoinColumn(name = "user_id")
     private User user;  
 
-    private String name;
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    private List<LineItem> lineitems;
 }

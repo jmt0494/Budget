@@ -1,5 +1,8 @@
 package com.taubel.budget.dtos;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.taubel.budget.entities.Category;
 
 import lombok.AllArgsConstructor;
@@ -22,14 +25,19 @@ public class CategoryDto {
         this.budget = new BudgetDto(category.getBudget());
         this.user = new UserDto(category.getUser());
         this.name = category.getName();
+        this.lineItems = category.getLineitems().stream()
+            .map(LineItemDto::new)
+            .collect(Collectors.toList());
     }
     
     private Long id;
 
+    private String name;
+
     private BudgetDto budget;
 
-    private UserDto user;
+    private List<LineItemDto> lineItems;
 
-    private String name;
+    private UserDto user;
 
 }
