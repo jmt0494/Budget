@@ -22,6 +22,11 @@ public class TransactionService {
     @Autowired
     private UserService userService;
 
+    public List<Transaction> findTransactionsByUsername(String username) {
+        User user = userService.getUserByUsername(username);
+        return transRepo.findAllByUserId(user.getUserId());
+    }
+
     public List<Transaction> findUnassigedTransactions(String username) {
         User user = userService.getUserByUsername(username);
         return transRepo.findTransactionsWithNullLineItemAndUserId(user.getUserId());

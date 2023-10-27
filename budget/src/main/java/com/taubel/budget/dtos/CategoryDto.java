@@ -3,6 +3,8 @@ package com.taubel.budget.dtos;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.Hibernate;
+
 import com.taubel.budget.entities.Category;
 
 import lombok.AllArgsConstructor;
@@ -22,12 +24,8 @@ public class CategoryDto {
 
     public CategoryDto(Category category) {
         this.id = category.getId();
-        this.budget = new BudgetDto(category.getBudget());
-        this.user = new UserDto(category.getUser());
         this.name = category.getName();
-        this.lineItems = category.getLineitems().stream()
-            .map(LineItemDto::new)
-            .collect(Collectors.toList());
+        this.user = new UserDto(category.getUser());
     }
     
     private Long id;
@@ -35,8 +33,6 @@ public class CategoryDto {
     private String name;
 
     private BudgetDto budget;
-
-    private List<LineItemDto> lineItems;
 
     private UserDto user;
 

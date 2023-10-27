@@ -27,14 +27,11 @@ public class LineItem {
     @Column(name = "budgeted_amount")
     private double budgetedAmount;
 
-    @OneToMany(mappedBy = "lineItem", fetch = FetchType.LAZY)
-    private List<Transaction> transactions;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne  
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;  
 

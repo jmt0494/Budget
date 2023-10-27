@@ -23,14 +23,12 @@ public class Category {
 
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "budget_id")
     private Budget budget;
 
-    @ManyToOne  
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;  
-
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-    private List<LineItem> lineitems;
+    
 }

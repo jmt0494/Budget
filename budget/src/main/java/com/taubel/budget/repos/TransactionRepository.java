@@ -12,4 +12,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>{
     
      @Query("SELECT t FROM Transaction t WHERE t.lineItem IS NULL AND t.user.id = :userId")
     List<Transaction> findTransactionsWithNullLineItemAndUserId(@Param("userId") Long userId);
+
+    @Query("SELECT t FROM Transaction t WHERE t.user.userId = :userId")
+    List<Transaction> findAllByUserId(@Param("userId") Long userId);
 }

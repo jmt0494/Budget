@@ -2,6 +2,8 @@ package com.taubel.budget.dtos;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.Hibernate;
+
 import com.taubel.budget.entities.Budget;
 import com.taubel.budget.enums.Month;
 
@@ -25,9 +27,6 @@ public class BudgetDto {
         this.month = budget.getMonth();
         this.year = budget.getYear();
         this.user = new UserDto(budget.getUser());
-        this.categories = budget.getCategories().stream()
-            .map(CategoryDto::new)
-            .collect(Collectors.toList());
     }
 
     private Long id;
@@ -38,5 +37,5 @@ public class BudgetDto {
     
     private UserDto user;
 
-    private List<CategoryDto> categories;
+    
 }

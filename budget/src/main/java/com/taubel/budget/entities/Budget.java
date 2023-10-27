@@ -25,7 +25,7 @@ public class Budget {
     @Column(name = "budget_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -35,8 +35,5 @@ public class Budget {
 
     @Column(name = "year", nullable = false)
     private int year;
-
-    @OneToMany(mappedBy = "budget", fetch = FetchType.LAZY)
-    private List<Category> categories;
 
 }
