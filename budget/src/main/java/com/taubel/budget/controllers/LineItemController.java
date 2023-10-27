@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.taubel.budget.dtos.LineItemDto;
 import com.taubel.budget.entities.LineItem;
 
 @RestController
@@ -19,17 +18,17 @@ import com.taubel.budget.entities.LineItem;
 public class LineItemController {
     
     @PostMapping()
-    public ResponseEntity<LineItemDto> createNewLineItem(@PathVariable("username") String username, @RequestBody LineItemDto lineItem) {
-        return ResponseEntity.ok(new LineItemDto()); //TODO
+    public ResponseEntity<LineItem> createNewLineItem(@PathVariable("username") String username, @RequestBody LineItem lineItem) {
+        return ResponseEntity.ok(new LineItem()); //TODO
     }
 
     @PutMapping()
-    public ResponseEntity<LineItemDto> updateLineItem(@PathVariable("username") String username, @RequestBody LineItemDto lineItem) {
-        return ResponseEntity.ok(new LineItemDto()); //TODO
+    public ResponseEntity<LineItem> updateLineItem(@PathVariable("username") String username, @RequestBody LineItem lineItem) {
+        return ResponseEntity.ok(new LineItem()); //TODO
     }
 
     @DeleteMapping("/{lineitem}")
-    public ResponseEntity<LineItemDto> deleteLineItem(@PathVariable("username") String username, @PathVariable("lineitem") int lineItemId) {
+    public ResponseEntity<LineItem> deleteLineItem(@PathVariable("username") String username, @PathVariable("lineitem") int lineItemId) {
         return ResponseEntity.ok(null); //TODO
     }
 

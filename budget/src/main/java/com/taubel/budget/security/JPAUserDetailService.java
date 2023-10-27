@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class JPAUserDetailService implements UserDetailsService{
 
-    private final UserRepository userRepository;
+    private final SecurityProfileRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) {

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.taubel.budget.dtos.CategoryDto;
 import com.taubel.budget.entities.Category;
 
 @RestController
@@ -19,17 +18,17 @@ import com.taubel.budget.entities.Category;
 public class CategoryController {
 
     @PostMapping()
-    public ResponseEntity<CategoryDto> createNewCategory(@PathVariable("username") String username, @RequestBody CategoryDto category) {   
-        return ResponseEntity.ok(new CategoryDto()); //TODO
+    public ResponseEntity<Category> createNewCategory(@PathVariable("username") String username, @RequestBody Category category) {   
+        return ResponseEntity.ok(new Category()); //TODO
     }
 
     @PutMapping()
-    public ResponseEntity<CategoryDto> updateCategory(@PathVariable("username") String username, @RequestBody CategoryDto category) {
-        return ResponseEntity.ok(new CategoryDto()); //TODO
+    public ResponseEntity<Category> updateCategory(@PathVariable("username") String username, @RequestBody Category category) {
+        return ResponseEntity.ok(new Category()); //TODO
     }
 
     @DeleteMapping("/{category}")
-    public ResponseEntity<CategoryDto> deleteCategory(@PathVariable("username") String username, @PathVariable("category") int categoryId) {
+    public ResponseEntity<Category> deleteCategory(@PathVariable("username") String username, @PathVariable("category") int categoryId) {
         return ResponseEntity.ok(null); //TODO
     }
 }

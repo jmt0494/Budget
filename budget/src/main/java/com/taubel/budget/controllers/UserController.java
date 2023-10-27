@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.taubel.budget.dtos.UserDto;
 import com.taubel.budget.entities.User;
 import com.taubel.budget.services.UserService;
 
@@ -23,15 +22,15 @@ public class UserController {
 
     @GetMapping(value = "/{username}")
     @PreAuthorize("#username == authentication.principal.username")
-    public ResponseEntity<UserDto> user(@PathVariable("username") String username) {
+    public ResponseEntity<User> user(@PathVariable("username") String username) {
         User user = userService.getUserByUsername(username);
-        return ResponseEntity.ok(new UserDto(user));
+        return ResponseEntity.ok(user);
     }
 
-    @PostMapping(value = "/register")
-    public ResponseEntity<UserDto> register(@RequestBody User user) {
-                UserDto newUser = userService.register(user);
-                return ResponseEntity.ok(newUser);   
-    }
+    // @PostMapping(value = "/register")
+    // public ResponseEntity<User> register(@RequestBody User user) {
+    //             User newUser = userService.register(user);
+    //             return ResponseEntity.ok(newUser);   
+    // }
 
 }

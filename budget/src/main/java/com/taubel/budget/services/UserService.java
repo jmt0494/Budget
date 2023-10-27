@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.taubel.budget.dtos.UserDto;
 import com.taubel.budget.entities.User;
 import com.taubel.budget.exceptions.UserAlreadyExistsException;
 import com.taubel.budget.exceptions.UsernameNotFoundException;
@@ -29,15 +28,15 @@ public class UserService {
 
     }
 
-    public UserDto register(User user) //throws UserAlreadyExistsException 
-    {
-        Optional<User> newUser = userRepository.findByUsername(user.getUsername());
-        if (newUser.isPresent()) throw new UserAlreadyExistsException("Username Already Exists"); 
-        newUser = userRepository.findByEmail(user.getEmail());
-        if (newUser.isPresent()) throw new UserAlreadyExistsException("Email Already Exists");
-        user.setPassword(encoder.encode(user.getPassword()));
-        return new UserDto(userRepository.save(user));
-    }
+    // public User register(User user)
+    // {
+    //     Optional<User> newUser = userRepository.findByUsername(user.getUsername());
+    //     if (newUser.isPresent()) throw new UserAlreadyExistsException("Username Already Exists"); 
+    //     newUser = userRepository.findByEmail(user.getEmail());
+    //     if (newUser.isPresent()) throw new UserAlreadyExistsException("Email Already Exists");
+    //     user.setPassword(encoder.encode(user.getPassword()));
+    //     return userRepository.save(user);
+    // }
 
     protected boolean UserMatchesURL(String UrlUsername, User user) {
         String username = user.getUsername();
