@@ -27,11 +27,11 @@ public class LineItem {
     @Column(name = "budgeted_amount")
     private double budgetedAmount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     private User user;  
 

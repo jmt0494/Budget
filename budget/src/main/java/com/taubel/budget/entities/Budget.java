@@ -25,7 +25,7 @@ public class Budget {
     @Column(name = "budget_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     private User user;
 
