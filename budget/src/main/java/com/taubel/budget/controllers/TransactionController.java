@@ -3,6 +3,7 @@ package com.taubel.budget.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.taubel.budget.Dtos.TransactionDto;
 import com.taubel.budget.entities.Transaction;
 import com.taubel.budget.services.TransactionService;
 
@@ -58,5 +59,4 @@ public class TransactionController {
          return ResponseEntity.ok(null);
     }
 
-    
 }

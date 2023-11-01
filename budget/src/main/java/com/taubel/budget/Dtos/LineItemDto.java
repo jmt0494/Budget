@@ -1,5 +1,6 @@
 package com.taubel.budget.Dtos;
 
+import com.taubel.budget.entities.LineItem;
 import com.taubel.budget.entities.User;
 
 import lombok.Getter;
@@ -10,6 +11,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class LineItemDto {
+
+    public LineItemDto(LineItem lineItem) {
+        this.id = lineItem.getId();
+        this.name = lineItem.getName();
+    }
 
     private Long id;
 

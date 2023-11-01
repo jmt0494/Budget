@@ -1,6 +1,7 @@
 package com.taubel.budget.Dtos;
 
 
+import com.taubel.budget.entities.Category;
 import com.taubel.budget.entities.User;
 
 import lombok.Getter;
@@ -11,6 +12,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class CategoryDto {
+
+    public CategoryDto(Category category) {
+        this.id = category.getId();
+        this.name = category.getName();
+    }
 
     private Long id;
 

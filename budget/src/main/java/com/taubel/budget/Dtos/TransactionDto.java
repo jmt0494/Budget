@@ -2,6 +2,7 @@ package com.taubel.budget.Dtos;
 
 import java.time.LocalDate;
 
+import com.taubel.budget.entities.Transaction;
 import com.taubel.budget.entities.User;
 
 import lombok.Getter;
@@ -12,6 +13,18 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class TransactionDto {
+
+    /**
+     * Creates a new TransactionDto with the internal values set. Relational values will have to be set using the setter methods.
+     * 
+     * @param trans
+     */
+    public TransactionDto(Transaction trans) {
+        this.id = trans.getId();
+        this.amount = trans.getAmount();
+        this.merchant = trans.getMerchant();
+        this.transactionDate = trans.getTransactionDate();
+    }
     
     private Long id;
 
@@ -24,5 +37,7 @@ public class TransactionDto {
     private User user;
 
     private LineItemDto lineItem;
+
+
 
 }
