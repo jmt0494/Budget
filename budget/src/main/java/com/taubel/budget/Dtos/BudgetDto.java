@@ -1,5 +1,6 @@
 package com.taubel.budget.Dtos;
 
+import com.taubel.budget.entities.Budget;
 import com.taubel.budget.entities.User;
 import com.taubel.budget.enums.Month;
 
@@ -12,12 +13,19 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BudgetDto {
 
+    public BudgetDto(Budget budget) {
+        this.id = budget.getId();
+        this.month = budget.getMonth();
+        this.year = budget.getYear();
+        this.userId = budget.getUser().getId();
+    }
+
     private Long id;
 
     private Month month;
 
     private int year;
 
-    private User user;
+    private Long userId;
 
 }

@@ -3,6 +3,7 @@ package com.taubel.budget.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.taubel.budget.Dtos.LineItemDto;
 import com.taubel.budget.Dtos.TransactionDto;
 import com.taubel.budget.entities.Transaction;
 import com.taubel.budget.services.TransactionService;
@@ -30,31 +31,31 @@ public class TransactionController {
     private TransactionService transService;
 
     @GetMapping()
-    public ResponseEntity<List<Transaction>> getTransactions(@PathVariable("username") String username) {
-        List<Transaction> transactions = transService.findTransactionsByUsername(username);
+    public ResponseEntity<List<TransactionDto>> getTransactions(@PathVariable("username") String username) {
+        List<TransactionDto> transactions = transService.findTransactionsByUsername(username);
         return ResponseEntity.ok(transactions);
     }
     
     @GetMapping("/unassigned")
-    public ResponseEntity<List<Transaction>> getUnassignedTransactions(@PathVariable("username") String username) {
-        List<Transaction> transactions = transService.findUnassigedTransactions(username);
+    public ResponseEntity<List<TransactionDto>> getUnassignedTransactions(@PathVariable("username") String username) {
+        List<TransactionDto> transactions = transService.findUnassigedTransactions(username);
         return ResponseEntity.ok(transactions); 
     }
 
     @PostMapping()
-    public ResponseEntity<Transaction> createNewTransaction(@RequestBody Transaction trans, @PathVariable("username") String username) {   
-        Transaction newTransaction = transService.createNewTransaction(trans, username);
+    public ResponseEntity<TransactionDto> createNewTransaction(@RequestBody TransactionDto trans, @PathVariable("username") String username) { 
+        TransactionDto newTransaction = transService.createNewTransaction(trans, username);
         return ResponseEntity.ok(newTransaction);
     }
 
     @PutMapping()
-    public ResponseEntity<Transaction> updateTransaction(@RequestBody Transaction trans, @PathVariable("username") String username) {
-        Transaction transaction = transService.updateTransaction(trans, username);
+    public ResponseEntity<TransactionDto> updateTransaction(@RequestBody TransactionDto trans, @PathVariable("username") String username) {
+        TransactionDto transaction = transService.updateTransaction(trans, username);
         return ResponseEntity.ok(transaction);
     }
 
     @DeleteMapping("/{transaction}")
-    public ResponseEntity<Transaction> deleteTransaction(@PathVariable("transaction") long transId, @PathVariable("username") String username) {
+    public ResponseEntity<TransactionDto> deleteTransaction(@PathVariable("transaction") long transId, @PathVariable("username") String username) {
          transService.deleteTransaction(transId, username);
          return ResponseEntity.ok(null);
     }

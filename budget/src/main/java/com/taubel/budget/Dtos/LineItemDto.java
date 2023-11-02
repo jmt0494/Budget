@@ -1,5 +1,6 @@
 package com.taubel.budget.Dtos;
 
+import com.taubel.budget.entities.Category;
 import com.taubel.budget.entities.LineItem;
 import com.taubel.budget.entities.User;
 
@@ -15,14 +16,16 @@ public class LineItemDto {
     public LineItemDto(LineItem lineItem) {
         this.id = lineItem.getId();
         this.name = lineItem.getName();
+        this.userId = lineItem.getUser().getId();
+        if (lineItem.getCategory() != null) this.categoryId = lineItem.getCategory().getId();
     }
 
     private Long id;
 
     private String name;
 
-    private User user;
+    private Long userId;
 
-    private CategoryDto category;
+    private Long categoryId;
 
 }

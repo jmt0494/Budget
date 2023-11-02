@@ -2,6 +2,7 @@ package com.taubel.budget.Dtos;
 
 import java.time.LocalDate;
 
+import com.taubel.budget.entities.LineItem;
 import com.taubel.budget.entities.Transaction;
 import com.taubel.budget.entities.User;
 
@@ -24,6 +25,8 @@ public class TransactionDto {
         this.amount = trans.getAmount();
         this.merchant = trans.getMerchant();
         this.transactionDate = trans.getTransactionDate();
+        this.userId = trans.getUser().getId();
+        if (trans.getLineItem() != null) this.lineItemId = trans.getLineItem().getId();
     }
     
     private Long id;
@@ -34,10 +37,8 @@ public class TransactionDto {
 
     private LocalDate transactionDate;
 
-    private User user;
+    private Long lineItemId;
 
-    private LineItemDto lineItem;
-
-
+    private Long userId;
 
 }

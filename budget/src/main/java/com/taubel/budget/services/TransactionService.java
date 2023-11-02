@@ -1,17 +1,22 @@
 package com.taubel.budget.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.taubel.budget.Dtos.TransactionDto;
+import com.taubel.budget.entities.LineItem;
 import com.taubel.budget.entities.Transaction;
 import com.taubel.budget.entities.User;
 import com.taubel.budget.exceptions.TransactionAlreadyExistsException;
 import com.taubel.budget.exceptions.TransactionDoesNotExistException;
 import com.taubel.budget.exceptions.UserNotAllowedException;
+import com.taubel.budget.repos.LineItemRepository;
 import com.taubel.budget.repos.TransactionRepository;
+import com.taubel.budget.repos.UserRepository;
 
 @Service
 public class TransactionService {
@@ -22,31 +27,65 @@ public class TransactionService {
     @Autowired
     private UserService userService;
 
-    public List<Transaction> findTransactionsByUsername(String username) {
+    @Autowired
+    private UserRepository userRepo;
+
+    @Autowired
+    private LineItemRepository lineItemRepo;
+
+    public List<TransactionDto> findTransactionsByUsername(String username) {
         User user = userService.getUserByUsername(username);
-        return transRepo.findAllByUserId(user.getUserId());
+        List<Transaction> transactions = transRepo.findAllByUserId(user.getId());
+        List<TransactionDto> dtos = transactions.stream()
+            .map(TransactionDto::new)
+            .toList();
+
+        return dtos;
     }
 
-    public List<Transaction> findUnassigedTransactions(String username) {
+    public List<TransactionDto> findUnassigedTransactions(String username) {
         User user = userService.getUserByUsername(username);
-        return transRepo.findTransactionsWithNullLineItemAndUserId(user.getUserId());
+        List<Transaction> transactions = transRepo.findTransactionsWithNullLineItemAndUserId(user.getId());
+        List<TransactionDto> dtos = transactions.stream()
+            .map(TransactionDto::new)
+            .toList();
+
+        return dtos;
     }
 
-    public Transaction updateTransaction(Transaction trans, String username) {
-        boolean transDoesNotExists = trans.getId() == null;
+    public TransactionDto updateTransaction(TransactionDto transDto, String username) {
+
+        boolean transDoesNotExists = transDto.getId() == null;
         if (transDoesNotExists) throw new TransactionDoesNotExistException("Transaction does not exist.");
 
-        if (!userService.UserMatchesURL(username, trans.getUser())) throw new UserNotAllowedException("User " + username + " does not own transaction " + trans.getId());
-        return transRepo.save(trans);
+        User transactionsUser = userRepo.getReferenceById(transDto.getUserId());
+        if (!userService.UserMatchesURL(username, transactionsUser)) throw new UserNotAllowedException("User " + username + " does not own transaction " + transDto.getId());
+
+        Transaction trans = transRepo.getReferenceById(transDto.getId());
+
+        trans.setAmount(transDto.getAmount());
+        trans.setMerchant(transDto.getMerchant());
+        trans.setTransactionDate(transDto.getTransactionDate());
+        if (trans.getLineItem() != null) {
+            LineItem lineitem = lineItemRepo.getReferenceById(transDto.getLineItemId());
+            trans.setLineItem(lineitem);
+        }
+
+        Transaction updatedTransaction = transRepo.save(trans);
+        TransactionDto updatedDto = new TransactionDto(updatedTransaction);
+
+        return updatedDto;
     }
 
-    public Transaction createNewTransaction(Transaction trans, String username) {
+    public TransactionDto createNewTransaction(TransactionDto trans, String username) {
         boolean transAlreadyExists = trans.getId() != null;
         if (transAlreadyExists) throw new TransactionAlreadyExistsException("Cannot create transaction as transaction " + trans.getId() + " it already exists.");
 
         
-        if (!userService.UserMatchesURL(username, trans.getUser())) throw new UserNotAllowedException("User " + username + " does not own transaction " + trans.getId());
-        return transRepo.save(trans);
+        // if (!userService.UserMatchesURL(username, trans.getUser())) throw new UserNotAllowedException("User " + username + " does not own transaction " + trans.getId());
+        // transRepo.save(trans);
+
+        return new TransactionDto();
     }
 
     
