@@ -27,12 +27,12 @@ public class Transaction {
     @Column(name = "merchant", length = 30)
     private String merchant;
 
+    @Column(name = "transaction_date", nullable = false)
+    private LocalDate transactionDate;
+
     @ManyToOne()
     @JoinColumn(name = "line_item_id")
     private LineItem lineItem;
-
-    @Column(name = "transaction_date", nullable = false)
-    private LocalDate transactionDate;
 
     @ManyToOne()
     @JoinColumn(name = "user_id")

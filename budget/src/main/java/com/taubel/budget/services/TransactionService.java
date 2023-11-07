@@ -53,13 +53,13 @@ public class TransactionService {
         return dtos;
     }
 
-    public TransactionDto updateTransaction(TransactionDto transDto, String username) {
+    public TransactionDto updateTransaction(TransactionDto transDto, String authUsername) {
 
         boolean transDoesNotExists = transDto.getId() == null;
         if (transDoesNotExists) throw new TransactionDoesNotExistException("Transaction does not exist.");
 
         User transactionsUser = userRepo.getReferenceById(transDto.getUserId());
-        if (!userService.UserMatchesURL(username, transactionsUser)) throw new UserNotAllowedException("User " + username + " does not own transaction " + transDto.getId());
+        if (!userService.UserMatchesAuth(authUsername, transactionsUser)) throw new UserNotAllowedException("User " + authUsername + " does not own transaction " + transDto.getId());
 
         Transaction trans = transRepo.getReferenceById(transDto.getId());
 
@@ -77,15 +77,26 @@ public class TransactionService {
         return updatedDto;
     }
 
-    public TransactionDto createNewTransaction(TransactionDto trans, String username) {
-        boolean transAlreadyExists = trans.getId() != null;
-        if (transAlreadyExists) throw new TransactionAlreadyExistsException("Cannot create transaction as transaction " + trans.getId() + " it already exists.");
+    public TransactionDto createNewTransaction(TransactionDto transDto, String authUsername) {
+        boolean transAlreadyExists = transDto.getId() != null;
+        if (transAlreadyExists) throw new TransactionAlreadyExistsException("Cannot create transaction as transaction " + transDto.getId() + " already exists.");
 
-        
-        // if (!userService.UserMatchesURL(username, trans.getUser())) throw new UserNotAllowedException("User " + username + " does not own transaction " + trans.getId());
-        // transRepo.save(trans);
+        User transactionsUser = userRepo.getReferenceById(transDto.getUserId());
+        if (!userService.UserMatchesAuth(authUsername, transactionsUser)) throw new UserNotAllowedException("User " + authUsername + " does not own transaction " + transDto.getId());
 
-        return new TransactionDto();
+        Transaction newTrans = new Transaction();
+        newTrans.setAmount(transDto.getAmount());
+        newTrans.setMerchant(transDto.getMerchant());
+        newTrans.setTransactionDate(transDto.getTransactionDate());
+        newTrans.setUser(transactionsUser);
+        if (transDto.getLineItemId() != null) {
+            LineItem lineItem = lineItemRepo.getReferenceById(transDto.getLineItemId());
+            newTrans.setLineItem(lineItem);
+        }
+
+        TransactionDto newTransDto = new TransactionDto(transRepo.save(newTrans));
+
+        return newTransDto;
     }
 
     
@@ -94,7 +105,7 @@ public class TransactionService {
         boolean trasnIsPresent = trans.isPresent();
         
         if (trasnIsPresent){
-            boolean UserMatchesURL = userService.UserMatchesURL(username, trans.get().getUser());
+            boolean UserMatchesURL = userService.UserMatchesAuth(username, trans.get().getUser());
 
             if (trasnIsPresent && !UserMatchesURL){
                 throw new UserNotAllowedException("User " + username + " does not own transaction " + transId);

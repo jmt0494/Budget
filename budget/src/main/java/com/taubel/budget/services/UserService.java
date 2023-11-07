@@ -52,7 +52,7 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    protected boolean UserMatchesURL(String UrlUsername, User user) {
+    protected boolean UserMatchesAuth(String UrlUsername, User user) {
         String username = user.getUsername();
         boolean output = UrlUsername.equals(username);
         return output;
