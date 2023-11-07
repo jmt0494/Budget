@@ -30,6 +30,12 @@ public class TransactionController {
     @Autowired
     private TransactionService transService;
 
+    @GetMapping("/{month}/{year}")
+    public ResponseEntity<List<TransactionDto>> getTransactionsByBudget(@PathVariable("username") String username, @PathVariable("month") String month, @PathVariable("year") int year) {
+        List<TransactionDto> transactions = transService.findTransactionsByBudget(username, month, year);
+        return ResponseEntity.ok(transactions);
+    }
+
     @GetMapping()
     public ResponseEntity<List<TransactionDto>> getTransactions(@PathVariable("username") String username) {
         List<TransactionDto> transactions = transService.findTransactionsByUsername(username);

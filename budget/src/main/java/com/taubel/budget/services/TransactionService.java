@@ -8,12 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.taubel.budget.Dtos.TransactionDto;
+import com.taubel.budget.entities.Budget;
 import com.taubel.budget.entities.LineItem;
 import com.taubel.budget.entities.Transaction;
 import com.taubel.budget.entities.User;
+import com.taubel.budget.enums.Month;
+import com.taubel.budget.exceptions.BudgetNotFoundException;
 import com.taubel.budget.exceptions.TransactionAlreadyExistsException;
 import com.taubel.budget.exceptions.TransactionDoesNotExistException;
 import com.taubel.budget.exceptions.UserNotAllowedException;
+import com.taubel.budget.exceptions.UsernameNotFoundException;
+import com.taubel.budget.repos.BudgetRepository;
 import com.taubel.budget.repos.LineItemRepository;
 import com.taubel.budget.repos.TransactionRepository;
 import com.taubel.budget.repos.UserRepository;
@@ -33,6 +38,30 @@ public class TransactionService {
     @Autowired
     private LineItemRepository lineItemRepo;
 
+    @Autowired
+    private BudgetRepository budgetRepo;
+
+
+    public List<TransactionDto> findTransactionsByBudget(String username, String month, int year) {
+        Optional<User> optionalUser = userRepo.findByUsername(username);
+        User user;
+        if (optionalUser.isPresent()) user = optionalUser.get();
+        else throw new UsernameNotFoundException(username + " not found");
+
+        Optional<Budget> optionalBudget = budgetRepo.findByUserAndMonthAndYear(user, Month.fromString(month), year);
+        Budget budget;
+        if (optionalBudget.isPresent()) budget = optionalBudget.get();
+        else throw new BudgetNotFoundException(username + " does not have a budget for " + month + " " + year + " yet.");
+
+        List<Transaction> transactions = transRepo.findTransactionsByBudget(budget);
+
+        List<TransactionDto> transDtos = transactions.stream()
+            .map(TransactionDto::new)
+            .toList();
+
+        return transDtos;
+    }
+
     public List<TransactionDto> findTransactionsByUsername(String username) {
         User user = userService.getUserByUsername(username);
         List<Transaction> transactions = transRepo.findAllByUserId(user.getId());
@@ -42,6 +71,7 @@ public class TransactionService {
 
         return dtos;
     }
+
 
     public List<TransactionDto> findUnassigedTransactions(String username) {
         User user = userService.getUserByUsername(username);
@@ -53,16 +83,15 @@ public class TransactionService {
         return dtos;
     }
 
-    public TransactionDto updateTransaction(TransactionDto transDto, String authUsername) {
 
+    public TransactionDto updateTransaction(TransactionDto transDto, String authUsername) {
         boolean transDoesNotExists = transDto.getId() == null;
         if (transDoesNotExists) throw new TransactionDoesNotExistException("Transaction does not exist.");
 
         User transactionsUser = userRepo.getReferenceById(transDto.getUserId());
-        if (!userService.UserMatchesAuth(authUsername, transactionsUser)) throw new UserNotAllowedException("User " + authUsername + " does not own transaction " + transDto.getId());
+        if (!userService.UserMatchesAuth(authUsername, transactionsUser)) throw new UserNotAllowedException(authUsername + " can not create transactions for other users");
 
         Transaction trans = transRepo.getReferenceById(transDto.getId());
-
         trans.setAmount(transDto.getAmount());
         trans.setMerchant(transDto.getMerchant());
         trans.setTransactionDate(transDto.getTransactionDate());
@@ -71,11 +100,10 @@ public class TransactionService {
             trans.setLineItem(lineitem);
         }
 
-        Transaction updatedTransaction = transRepo.save(trans);
-        TransactionDto updatedDto = new TransactionDto(updatedTransaction);
-
+        TransactionDto updatedDto = new TransactionDto(transRepo.save(trans));
         return updatedDto;
     }
+
 
     public TransactionDto createNewTransaction(TransactionDto transDto, String authUsername) {
         boolean transAlreadyExists = transDto.getId() != null;
@@ -95,7 +123,6 @@ public class TransactionService {
         }
 
         TransactionDto newTransDto = new TransactionDto(transRepo.save(newTrans));
-
         return newTransDto;
     }
 

@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.taubel.budget.exceptions.BudgetNotFoundException;
 import com.taubel.budget.exceptions.TransactionAlreadyExistsException;
 import com.taubel.budget.exceptions.TransactionDoesNotExistException;
 import com.taubel.budget.exceptions.UserAlreadyExistsException;
@@ -38,6 +39,11 @@ public class ExceptionHandlerAspect {
     @ExceptionHandler(UserNotAllowedException.class)
     public ResponseEntity<Object> UserNotAllowedHandler(HttpServletRequest request, UserNotAllowedException ex) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(BudgetNotFoundException.class)
+    public ResponseEntity<Object> BudgetNotFoundHandler(HttpServletRequest request, BudgetNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
 }
