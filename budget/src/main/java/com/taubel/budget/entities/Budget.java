@@ -2,8 +2,6 @@ package com.taubel.budget.entities;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 import com.taubel.budget.enums.Month;
 
 import lombok.AllArgsConstructor;

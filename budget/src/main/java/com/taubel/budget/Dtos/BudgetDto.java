@@ -1,7 +1,6 @@
 package com.taubel.budget.Dtos;
 
 import com.taubel.budget.entities.Budget;
-import com.taubel.budget.entities.User;
 import com.taubel.budget.enums.Month;
 
 import lombok.Getter;

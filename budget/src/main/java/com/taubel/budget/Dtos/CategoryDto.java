@@ -2,7 +2,6 @@ package com.taubel.budget.Dtos;
 
 
 import com.taubel.budget.entities.Category;
-import com.taubel.budget.entities.User;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

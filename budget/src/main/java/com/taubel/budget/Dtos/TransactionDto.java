@@ -2,9 +2,7 @@ package com.taubel.budget.Dtos;
 
 import java.time.LocalDate;
 
-import com.taubel.budget.entities.LineItem;
 import com.taubel.budget.entities.Transaction;
-import com.taubel.budget.entities.User;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
