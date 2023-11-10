@@ -11,12 +11,9 @@ import com.taubel.budget.entities.Budget;
 import com.taubel.budget.entities.LineItem;
 import com.taubel.budget.entities.Transaction;
 import com.taubel.budget.entities.User;
-import com.taubel.budget.exceptions.BudgetNotFoundException;
 import com.taubel.budget.exceptions.TransactionAlreadyExistsException;
 import com.taubel.budget.exceptions.TransactionDoesNotExistException;
 import com.taubel.budget.exceptions.UserNotAllowedException;
-import com.taubel.budget.exceptions.UsernameNotFoundException;
-import com.taubel.budget.repos.BudgetRepository;
 import com.taubel.budget.repos.LineItemRepository;
 import com.taubel.budget.repos.TransactionRepository;
 import com.taubel.budget.repos.UserRepository;
@@ -35,9 +32,6 @@ public class TransactionService {
 
     @Autowired
     private LineItemRepository lineItemRepo;
-
-    @Autowired
-    private BudgetRepository budgetRepo;
 
     @Autowired
     private BudgetService budgetService;

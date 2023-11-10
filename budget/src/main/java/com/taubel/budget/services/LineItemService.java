@@ -1,7 +1,6 @@
 package com.taubel.budget.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,9 +9,7 @@ import com.taubel.budget.Dtos.LineItemDto;
 import com.taubel.budget.entities.Budget;
 import com.taubel.budget.entities.LineItem;
 import com.taubel.budget.entities.User;
-import com.taubel.budget.exceptions.UsernameNotFoundException;
 import com.taubel.budget.repos.LineItemRepository;
-import com.taubel.budget.repos.UserRepository;
 
 @Service
 public class LineItemService {
