@@ -1,5 +1,8 @@
 package com.taubel.budget.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.taubel.budget.Dtos.BudgetDto;
 import com.taubel.budget.entities.Budget;
 
 @RestController
@@ -17,20 +21,23 @@ import com.taubel.budget.entities.Budget;
 @PreAuthorize("#username == authentication.principal.username")
 public class BudgetController {
     
-    //All methods will alter the budget as well as any dependent data (category, LineItem, Transaction)
-    
-    @GetMapping("/{month}/{year}")
-    public ResponseEntity<Budget> getBudget(@PathVariable("username") String username, @PathVariable("month") String month, @PathVariable("year") int year) {
-        return ResponseEntity.ok(new Budget()); //TODO retrieve from database
+    @GetMapping()
+    public ResponseEntity<List<BudgetDto>> getBudgets(@PathVariable("username") String username) {
+        return ResponseEntity.ok(new ArrayList<BudgetDto>()); //TODO retrieve from database
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BudgetDto> getBudget(@PathVariable("username") String username, @PathVariable("id") Long id) {
+        return ResponseEntity.ok(new BudgetDto());
     }
     
     @PostMapping()
-    public ResponseEntity<Budget> createBudget(@PathVariable("username") String username, @RequestBody Budget budget) {
-        return ResponseEntity.ok(new Budget()); //TODO
+    public ResponseEntity<BudgetDto> createBudget(@PathVariable("username") String username, @RequestBody BudgetDto budget) {
+        return ResponseEntity.ok(new BudgetDto()); //TODO
     }
 
-    @DeleteMapping()
-    public ResponseEntity<Budget> deleteBudget(@PathVariable("username") String username, @RequestBody Budget budget) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BudgetDto> deleteBudget(@PathVariable("username") String username, @PathVariable("id") Long id) {
         return ResponseEntity.ok(null); //TODO
     }
 
