@@ -7,7 +7,6 @@ import com.taubel.budget.entities.User;
 
 import java.util.Optional;
 
-import com.taubel.budget.enums.Month;
 
 
 public interface BudgetRepository extends JpaRepository<Budget, Long>{
