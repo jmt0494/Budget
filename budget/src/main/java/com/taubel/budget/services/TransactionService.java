@@ -41,16 +41,16 @@ public class TransactionService {
     private BudgetRepository budgetRepo;
 
 
-    public List<TransactionDto> findTransactionsByBudget(String username, String month, int year) {
+    public List<TransactionDto> findTransactionsByBudget(String username, Long budgetId) {
         Optional<User> optionalUser = userRepo.findByUsername(username);
         User user;
         if (optionalUser.isPresent()) user = optionalUser.get();
         else throw new UsernameNotFoundException(username + " not found");
 
-        Optional<Budget> optionalBudget = budgetRepo.findByUserAndMonthAndYear(user, Month.fromString(month), year);
+        Optional<Budget> optionalBudget = budgetRepo.findByIdAndUser(budgetId, user);
         Budget budget;
         if (optionalBudget.isPresent()) budget = optionalBudget.get();
-        else throw new BudgetNotFoundException(username + " does not have a budget for " + month + " " + year + " yet.");
+        else throw new BudgetNotFoundException(username + " does not have a budget with the ID " + budgetId);
 
         List<Transaction> transactions = transRepo.findTransactionsByBudget(budget);
 

@@ -12,5 +12,5 @@ import com.taubel.budget.enums.Month;
 
 public interface BudgetRepository extends JpaRepository<Budget, Long>{
     
-    Optional<Budget> findByUserAndMonthAndYear(User user, Month month, int year);
+    Optional<Budget> findByIdAndUser(Long id, User user);
 }
