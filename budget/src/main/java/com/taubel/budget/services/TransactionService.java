@@ -39,20 +39,15 @@ public class TransactionService {
     @Autowired
     private BudgetRepository budgetRepo;
 
+    @Autowired
+    private BudgetService budgetService;
+
 
     public List<TransactionDto> findTransactionsByBudget(String username, Long budgetId) {
-        Optional<User> optionalUser = userRepo.findByUsername(username);
-        User user;
-        if (optionalUser.isPresent()) user = optionalUser.get();
-        else throw new UsernameNotFoundException(username + " not found");
-
-        Optional<Budget> optionalBudget = budgetRepo.findByIdAndUser(budgetId, user);
-        Budget budget;
-        if (optionalBudget.isPresent()) budget = optionalBudget.get();
-        else throw new BudgetNotFoundException(username + " does not have a budget with the ID " + budgetId);
+        User user = userService.findByUsername(username);
+        Budget budget = budgetService.findByIdAndUsername(budgetId, user);
 
         List<Transaction> transactions = transRepo.findTransactionsByBudget(budget);
-
         List<TransactionDto> transDtos = transactions.stream()
             .map(TransactionDto::new)
             .toList();
@@ -61,7 +56,7 @@ public class TransactionService {
     }
 
     public List<TransactionDto> findTransactionsByUsername(String username) {
-        User user = userService.getUserByUsername(username);
+        User user = userService.findByUsername(username);
         List<Transaction> transactions = transRepo.findAllByUserId(user.getId());
         List<TransactionDto> dtos = transactions.stream()
             .map(TransactionDto::new)
@@ -72,7 +67,7 @@ public class TransactionService {
 
 
     public List<TransactionDto> findUnassigedTransactions(String username) {
-        User user = userService.getUserByUsername(username);
+        User user = userService.findByUsername(username);
         List<Transaction> transactions = transRepo.findTransactionsWithNullLineItemAndUserId(user.getId());
         List<TransactionDto> dtos = transactions.stream()
             .map(TransactionDto::new)

@@ -17,13 +17,13 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserService {
     
-    private UserRepository userRepository;
+    private UserRepository userRepo;
     private PasswordEncoder encoder;
 
 
     public User getUserByUsername(String username) {
 
-        Optional<User> user = userRepository.findByUsername(username);
+        Optional<User> user = userRepo.findByUsername(username);
         
         if (user.isPresent()) return user.get();
         else throw new UsernameNotFoundException(username + "not found");
@@ -32,21 +32,30 @@ public class UserService {
 
     public User register(UserDto user)
     {
-        Optional<User> existingUser = userRepository.findByUsername(user.getUsername());
+        Optional<User> existingUser = userRepo.findByUsername(user.getUsername());
         if (existingUser.isPresent()) throw new UserAlreadyExistsException("Username Already Exists"); 
-        existingUser = userRepository.findByEmail(user.getEmail());
+        existingUser = userRepo.findByEmail(user.getEmail());
         if (existingUser.isPresent()) throw new UserAlreadyExistsException("Email Already Exists");
 
         User newUser = new User();
         newUser.setPassword(encoder.encode(user.getPassword()));
         newUser.setEmail(user.getEmail());
         newUser.setUsername(user.getUsername());
-        return userRepository.save(newUser);
+        return userRepo.save(newUser);
     }
 
     protected boolean UserMatchesAuth(String UrlUsername, User user) {
         String username = user.getUsername();
         boolean output = UrlUsername.equals(username);
         return output;
+    }
+
+    protected User findByUsername(String username) {
+        Optional<User> optionalUser = userRepo.findByUsername(username);
+        User user;
+        if (optionalUser.isPresent()) user = optionalUser.get();
+        else throw new UsernameNotFoundException(username + " not found");
+
+        return user;
     }
 }

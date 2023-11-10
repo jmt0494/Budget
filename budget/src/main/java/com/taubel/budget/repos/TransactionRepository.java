@@ -12,12 +12,12 @@ import com.taubel.budget.entities.Transaction;
 public interface TransactionRepository extends JpaRepository<Transaction, Long>{
     
      @Query("SELECT t FROM Transaction t WHERE t.lineItem IS NULL AND t.user.id = :userId")
-    List<Transaction> findTransactionsWithNullLineItemAndUserId(@Param("userId") Long userId);
+    List<Transaction> findTransactionsWithNullLineItemAndUserId(Long userId);
 
     @Query("SELECT t FROM Transaction t WHERE t.user.id = :userId")
-    List<Transaction> findAllByUserId(@Param("userId") Long userId);
+    List<Transaction> findAllByUserId(Long userId);
 
     @Query("SELECT t FROM Transaction t WHERE t.lineItem.category.budget = :budget")
-    List<Transaction> findTransactionsByBudget(@Param("budget") Budget budget);
+    List<Transaction> findTransactionsByBudget(Budget budget);
     
 }

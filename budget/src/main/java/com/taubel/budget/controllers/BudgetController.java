@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taubel.budget.Dtos.BudgetDto;
-import com.taubel.budget.entities.Budget;
 
 @RestController
 @RequestMapping("/{username}/budget")

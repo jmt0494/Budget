@@ -1,8 +1,8 @@
 package com.taubel.budget.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,15 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taubel.budget.Dtos.LineItemDto;
+import com.taubel.budget.services.LineItemService;
 
 @RestController
 @RequestMapping("/{username}/lineitem")
 @PreAuthorize("#username == authentication.principal.username")
 public class LineItemController {
 
+    @Autowired
+    private LineItemService lineItemServ;
+
     @GetMapping("/{budget}")
     public ResponseEntity<List<LineItemDto>> getLineItemsByBudget (@PathVariable("username") String username, @PathVariable("budget") Long budgetId){
-        return ResponseEntity.ok(new ArrayList<LineItemDto>());
+        List<LineItemDto> lineItems = lineItemServ.getLineItemsByBudget(username, budgetId);
+        return ResponseEntity.ok(lineItems);
     }
     
     @PostMapping()
