@@ -13,11 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TransactionDto {
 
-    /**
-     * Creates a new TransactionDto with the internal values set. Relational values will have to be set using the setter methods.
-     * 
-     * @param trans
-     */
     public TransactionDto(Transaction trans) {
         this.id = trans.getId();
         this.amount = trans.getAmount();
