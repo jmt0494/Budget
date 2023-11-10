@@ -11,7 +11,6 @@ import com.taubel.budget.entities.Budget;
 import com.taubel.budget.entities.LineItem;
 import com.taubel.budget.entities.Transaction;
 import com.taubel.budget.entities.User;
-import com.taubel.budget.enums.Month;
 import com.taubel.budget.exceptions.BudgetNotFoundException;
 import com.taubel.budget.exceptions.TransactionAlreadyExistsException;
 import com.taubel.budget.exceptions.TransactionDoesNotExistException;
