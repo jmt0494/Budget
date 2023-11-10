@@ -6,21 +6,23 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.taubel.budget.entities.User;
+
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class SecurityUser implements UserDetails{
 
-    private final SecurityProfile profile;
+    private final User user;
 
     @Override
     public String getPassword() {
-        return profile.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return profile.getUsername();
+        return user.getUsername();
 
     }
     @Override

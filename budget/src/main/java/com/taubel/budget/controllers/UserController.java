@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.taubel.budget.Dtos.UserRegistrationDto;
+import com.taubel.budget.Dtos.UserDto;
 import com.taubel.budget.entities.User;
 import com.taubel.budget.services.UserService;
 
@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<User> register(@RequestBody UserRegistrationDto user) {
+    public ResponseEntity<User> register(@RequestBody UserDto user) {
                 User newUser = userService.register(user);
                 return ResponseEntity.ok(newUser);   
     }

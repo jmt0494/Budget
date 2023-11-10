@@ -1,23 +1,15 @@
--- Sample data for Users
-INSERT INTO Users (username, email)
-VALUES
-    ('user1', 'user1@example.com'),
-    ('user2', 'user2@example.com');
-   
--- Sample data for Security_Profile
-INSERT INTO Security_Profile (username, password)
-VALUES
-    ('user1', '$2a$10$ehJpRaP4sj8g3iLBAZ897OboORdj6A.qXIzVwf3DYEwloqyc91Ue2'),
-    ('user2', '$2a$10$ZyIxLnwYMVvOfAQduPRsB.xiaOmz4bPXnSLWJ/NFZmiAksP3f9VxW');
 
--- Sample data for Budgets with the updated structure
+INSERT INTO Users (username, email, password)
+VALUES
+    ('user1', 'user1@example.com', '$2a$10$ehJpRaP4sj8g3iLBAZ897OboORdj6A.qXIzVwf3DYEwloqyc91Ue2'),
+    ('user2', 'user2@example.com', '$2a$10$ZyIxLnwYMVvOfAQduPRsB.xiaOmz4bPXnSLWJ/NFZmiAksP3f9VxW');
+
 INSERT INTO Budgets (user_id, month, year)
 VALUES
     (1, 'Jan', 2023),
     (1, 'Feb', 2023),
     (2, 'Jan', 2023);
 
--- Sample data for Categories
 INSERT INTO Categories (budget_id, name, user_id)
 VALUES
     (1, 'Groceries', 1),
@@ -25,8 +17,6 @@ VALUES
     (2, 'Entertainment', 2),
     (3, 'Transportation', 1);
 
-
--- Sample data for Line Items
 INSERT INTO Line_Items (category_id, name, budgeted_amount, user_id)
 VALUES
     (1, 'Food', 300.00, 1),
@@ -46,19 +36,19 @@ VALUES
    	(null,'2023-01-20', 50.00, 'Water Company', 1),
    	(null, '2023-01-15', 50.00, 'Toiletries Shop', 1);
 
---     Hibernate: 
+-- Hibernate: 
 --     alter table if exists budgets
 --        drop constraint if exists FKln0tm5tgf3f9q3sp9sa5m8m7b
--- Hibernate:
+-- Hibernate: 
 --     alter table if exists categories
 --        drop constraint if exists FKjfeip1fesndyacyyy077lr8od
--- Hibernate: 
+-- Hibernate:
 --     alter table if exists categories
 --        drop constraint if exists FKghuylkwuedgl2qahxjt8g41kb
 -- Hibernate:
 --     alter table if exists line_items
 --        drop constraint if exists FKss1s6qorogrtoyq9rjjspfd5d
--- Hibernate:
+-- Hibernate: 
 --     alter table if exists line_items
 --        drop constraint if exists FK1jlsvwsomhckf8rdasnonr4e7
 -- Hibernate:
@@ -71,11 +61,9 @@ VALUES
 --     drop table if exists budgets cascade
 -- Hibernate:
 --     drop table if exists categories cascade
--- Hibernate: 
+-- Hibernate:
 --     drop table if exists line_items cascade
--- Hibernate:
---     drop table if exists security_profile cascade
--- Hibernate:
+-- Hibernate: 
 --     drop table if exists transactions cascade
 -- Hibernate:
 --     drop table if exists users cascade
@@ -105,13 +93,6 @@ VALUES
 --         primary key (line_item_id)
 --     )
 -- Hibernate: 
---     create table security_profile (
---         security_profile_id bigserial not null,
---         password varchar(255),
---         username varchar(255),
---         primary key (security_profile_id)
---     )
--- Hibernate: 
 --     create table transactions (
 --         amount float(53) not null,
 --         transaction_date date not null,
@@ -121,14 +102,15 @@ VALUES
 --         merchant varchar(30),
 --         primary key (transaction_id)
 --     )
--- Hibernate:
+-- Hibernate: 
 --     create table users (
 --         user_id bigserial not null,
 --         email varchar(255),
+--         password varchar(255),
 --         username varchar(255),
 --         primary key (user_id)
 --     )
--- Hibernate: 
+-- Hibernate:
 --     alter table if exists budgets
 --        add constraint FKln0tm5tgf3f9q3sp9sa5m8m7b
 --        foreign key (user_id)
@@ -138,7 +120,7 @@ VALUES
 --        add constraint FKjfeip1fesndyacyyy077lr8od
 --        foreign key (budget_id)
 --        references budgets
--- Hibernate:
+-- Hibernate: 
 --     alter table if exists categories
 --        add constraint FKghuylkwuedgl2qahxjt8g41kb
 --        foreign key (user_id)
@@ -158,7 +140,7 @@ VALUES
 --        add constraint FK3jm99pcu8r0cxc1fsnd0uclos
 --        foreign key (line_item_id)
 --        references line_items
--- Hibernate: 
+-- Hibernate:
 --     alter table if exists transactions
 --        add constraint FKqwv7rmvc8va8rep7piikrojds
 --        foreign key (user_id)
