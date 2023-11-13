@@ -1,6 +1,7 @@
 package com.taubel.budget.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,18 @@ public class LineItemService {
 
         LineItem updatededLineItem = lineItemRepo.save(lineItem);
         return new LineItemDto(updatededLineItem);
+    }
+
+    public void deleteLineItem(long lineItemId, String username) {
+        Optional<LineItem> lineItem = lineItemRepo.findById(lineItemId);
+        
+        if(lineItem.isPresent()) {
+            boolean userMatchesURL = userService.UserMatchesAuth(username, lineItem.get().getUser());
+
+            if (!userMatchesURL) throw new UserNotAllowedException("User " + username + " does not own lineItem " + lineItemId);
+        }
+
+        lineItemRepo.deleteById(lineItemId);
     }
 
 }

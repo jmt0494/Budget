@@ -116,15 +116,13 @@ public class TransactionService {
     
     public void deleteTransaction(long transId, String username) {
         Optional<Transaction> trans = transRepo.findById(transId);
-        boolean trasnIsPresent = trans.isPresent();
         
-        if (trasnIsPresent){
+        if (trans.isPresent()){
             boolean UserMatchesURL = userService.UserMatchesAuth(username, trans.get().getUser());
 
-            if (trasnIsPresent && !UserMatchesURL){
-                throw new UserNotAllowedException("User " + username + " does not own transaction " + transId);
-            }
-        }
+            if (!UserMatchesURL) throw new UserNotAllowedException("User " + username + " does not own transaction " + transId);
+        } else return;
+
         transRepo.deleteById(transId);
     }
 
