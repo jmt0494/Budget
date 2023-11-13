@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taubel.budget.Dtos.LineItemDto;
+import com.taubel.budget.exceptions.LineItemAlreadyExistsException;
+import com.taubel.budget.exceptions.NullFieldNotAllowedException;
 import com.taubel.budget.services.LineItemService;
 
 @RestController
@@ -33,12 +35,16 @@ public class LineItemController {
     
     @PostMapping()
     public ResponseEntity<LineItemDto> createNewLineItem(@PathVariable("username") String username, @RequestBody LineItemDto lineItem) {
-        return ResponseEntity.ok(new LineItemDto()); //TODO
+        if (lineItem.getId() != null) throw new LineItemAlreadyExistsException("LineItem " + lineItem.getId() + " already exists");
+        LineItemDto updatedLineItem = lineItemServ.updateCreateLineItem(lineItem, username);
+        return ResponseEntity.ok(updatedLineItem);
     }
 
     @PutMapping()
     public ResponseEntity<LineItemDto> updateLineItem(@PathVariable("username") String username, @RequestBody LineItemDto lineItem) {
-        return ResponseEntity.ok(new LineItemDto()); //TODO
+        if (lineItem.getId() == null) throw new NullFieldNotAllowedException("LineItem is missing an ID");
+        LineItemDto updatedLineItem = lineItemServ.updateCreateLineItem(lineItem, username);
+        return ResponseEntity.ok(updatedLineItem);
     }
 
     @DeleteMapping("/{lineitem}")

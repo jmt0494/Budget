@@ -14,6 +14,7 @@ public class LineItemDto {
     public LineItemDto(LineItem lineItem) {
         this.id = lineItem.getId();
         this.name = lineItem.getName();
+        this.budgetedAmount = lineItem.getBudgetedAmount();
         this.userId = lineItem.getUser().getId();
         if (lineItem.getCategory() != null) this.categoryId = lineItem.getCategory().getId();
     }
@@ -21,6 +22,8 @@ public class LineItemDto {
     private Long id;
 
     private String name;
+
+    private double budgetedAmount;
 
     private Long userId;
 

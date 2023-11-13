@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.taubel.budget.exceptions.BudgetNotFoundException;
+import com.taubel.budget.exceptions.LineItemAlreadyExistsException;
+import com.taubel.budget.exceptions.NullFieldNotAllowedException;
 import com.taubel.budget.exceptions.TransactionAlreadyExistsException;
 import com.taubel.budget.exceptions.TransactionDoesNotExistException;
 import com.taubel.budget.exceptions.UserAlreadyExistsException;
@@ -46,4 +48,13 @@ public class ExceptionHandlerAspect {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
+    @ExceptionHandler(LineItemAlreadyExistsException.class)
+    public ResponseEntity<Object> LineItemAlreadyExistsHandler(HttpServletRequest request, LineItemAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(NullFieldNotAllowedException.class)
+        public ResponseEntity<Object> NullFieldNotAllowedHandler(HttpServletRequest request, NullFieldNotAllowedException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
 }
