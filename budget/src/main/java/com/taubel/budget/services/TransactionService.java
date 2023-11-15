@@ -39,7 +39,7 @@ public class TransactionService {
 
     public List<TransactionDto> findTransactionsByBudget(String username, Long budgetId) {
         User user = userService.findByUsername(username);
-        Budget budget = budgetService.findByIdAndUsername(budgetId, user);
+        Budget budget = budgetService.findByIdAndUser(budgetId, user);
 
         List<Transaction> transactions = transRepo.findTransactionsByBudget(budget);
         List<TransactionDto> transDtos = transactions.stream()

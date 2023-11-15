@@ -32,7 +32,7 @@ public class LineItemService {
 
     public List<LineItemDto> getLineItemsByBudget(String username, Long budgetId) {
         User user = userService.findByUsername(username);
-        Budget budget = budgetService.findByIdAndUsername(budgetId, user);
+        Budget budget = budgetService.findByIdAndUser(budgetId, user);
 
         List<LineItem> lineItems = lineItemRepo.findLineItemsByBudget(budget);
         List<LineItemDto> dtos = lineItems.stream()

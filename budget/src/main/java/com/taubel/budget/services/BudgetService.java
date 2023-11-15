@@ -16,7 +16,8 @@ public class BudgetService {
     @Autowired
     BudgetRepository budgetRepo;
 
-    protected Budget findByIdAndUsername(Long id, User user) {
+    
+    protected Budget findByIdAndUser(Long id, User user) {
         Optional<Budget> optionalBudget = budgetRepo.findByIdAndUser(id, user);
         Budget budget;
         if (optionalBudget.isPresent()) budget = optionalBudget.get();

@@ -23,14 +23,14 @@ public class UserController {
 
     @GetMapping(value = "/{username}")
     @PreAuthorize("#username == authentication.principal.username")
-    public ResponseEntity<User> user(@PathVariable("username") String username) {
-        User user = userService.getUserByUsername(username);
+    public ResponseEntity<UserDto> user(@PathVariable("username") String username) {
+        UserDto user = userService.getUserByUsername(username);
         return ResponseEntity.ok(user);
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<User> register(@RequestBody UserDto user) {
-                User newUser = userService.register(user);
+    public ResponseEntity<UserDto> register(@RequestBody User user) {
+                UserDto newUser = userService.register(user);
                 return ResponseEntity.ok(newUser);   
     }
 

@@ -21,16 +21,16 @@ public class UserService {
     private PasswordEncoder encoder;
 
 
-    public User getUserByUsername(String username) {
+    public UserDto getUserByUsername(String username) {
 
-        Optional<User> user = userRepo.findByUsername(username);
-        
-        if (user.isPresent()) return user.get();
-        else throw new UsernameNotFoundException(username + "not found");
+        User user = findByUsername(username);
+        UserDto userDto = new UserDto(user);
+
+        return userDto;
 
     }
 
-    public User register(UserDto user)
+    public UserDto register(User user)
     {
         Optional<User> existingUser = userRepo.findByUsername(user.getUsername());
         if (existingUser.isPresent()) throw new UserAlreadyExistsException("Username Already Exists"); 
@@ -41,7 +41,11 @@ public class UserService {
         newUser.setPassword(encoder.encode(user.getPassword()));
         newUser.setEmail(user.getEmail());
         newUser.setUsername(user.getUsername());
-        return userRepo.save(newUser);
+        newUser = userRepo.save(newUser);
+
+        UserDto userDto = new UserDto(newUser);
+
+        return userDto;
     }
 
     protected boolean UserMatchesAuth(String UrlUsername, User user) {
