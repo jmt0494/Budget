@@ -1,10 +1,12 @@
 package com.taubel.budget.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.taubel.budget.Dtos.BudgetDto;
 import com.taubel.budget.entities.Budget;
 import com.taubel.budget.entities.User;
 import com.taubel.budget.exceptions.BudgetNotFoundException;
@@ -15,6 +17,19 @@ public class BudgetService {
     
     @Autowired
     BudgetRepository budgetRepo;
+
+    @Autowired
+    UserService userService;
+
+    public List<BudgetDto> findBudgetsByUsername(String Username) {
+        User user = userService.findByUsername(Username);
+        List<Budget> budgets = budgetRepo.findAllByUser(user);
+        List<BudgetDto> dtos = budgets.stream()
+            .map(BudgetDto::new)
+            .toList();
+        
+        return dtos;
+    }
 
     
     protected Budget findByIdAndUser(Long id, User user) {

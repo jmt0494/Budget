@@ -3,6 +3,7 @@ package com.taubel.budget.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,20 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taubel.budget.Dtos.BudgetDto;
+import com.taubel.budget.services.BudgetService;
 
 @RestController
 @RequestMapping("/{username}/budget")
 @PreAuthorize("#username == authentication.principal.username")
 public class BudgetController {
+
+    @Autowired
+    private BudgetService budgetService;
     
     @GetMapping()
     public ResponseEntity<List<BudgetDto>> getBudgets(@PathVariable("username") String username) {
-        return ResponseEntity.ok(new ArrayList<BudgetDto>()); //TODO retrieve from database
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<BudgetDto> getBudget(@PathVariable("username") String username, @PathVariable("id") Long id) {
-        return ResponseEntity.ok(new BudgetDto());
+        List<BudgetDto> budgets = budgetService.findBudgetsByUsername(username);
+        return ResponseEntity.ok(budgets);
     }
     
     @PostMapping()
