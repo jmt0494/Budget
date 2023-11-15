@@ -1,6 +1,5 @@
 package com.taubel.budget.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taubel.budget.Dtos.CategoryDto;
+import com.taubel.budget.exceptions.ResourceAlreadyExistsException;
 import com.taubel.budget.services.CategoryService;
 
 @RestController
@@ -34,6 +34,7 @@ public class CategoryController {
 
     @PostMapping()
     public ResponseEntity<CategoryDto> createNewCategory(@PathVariable("username") String username, @RequestBody CategoryDto category) {   
+        if (category.getId() != null) throw new ResourceAlreadyExistsException("ID field should be null");
         return ResponseEntity.ok(new CategoryDto()); //TODO
     }
 

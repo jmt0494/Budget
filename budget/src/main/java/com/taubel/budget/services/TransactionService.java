@@ -11,7 +11,7 @@ import com.taubel.budget.entities.Budget;
 import com.taubel.budget.entities.LineItem;
 import com.taubel.budget.entities.Transaction;
 import com.taubel.budget.entities.User;
-import com.taubel.budget.exceptions.TransactionAlreadyExistsException;
+import com.taubel.budget.exceptions.ResourceAlreadyExistsException;
 import com.taubel.budget.exceptions.TransactionDoesNotExistException;
 import com.taubel.budget.exceptions.UserNotAllowedException;
 import com.taubel.budget.repos.LineItemRepository;
@@ -94,7 +94,7 @@ public class TransactionService {
 
     public TransactionDto createNewTransaction(TransactionDto transDto, String authUsername) {
         boolean transAlreadyExists = transDto.getId() != null;
-        if (transAlreadyExists) throw new TransactionAlreadyExistsException("Cannot create transaction as transaction " + transDto.getId() + " already exists.");
+        if (transAlreadyExists) throw new ResourceAlreadyExistsException("Cannot create transaction as transaction " + transDto.getId() + " already exists.");
 
         User transactionsUser = userRepo.getReferenceById(transDto.getUserId());
         if (!userService.UserMatchesAuth(authUsername, transactionsUser)) throw new UserNotAllowedException("User " + authUsername + " does not own transaction " + transDto.getId());

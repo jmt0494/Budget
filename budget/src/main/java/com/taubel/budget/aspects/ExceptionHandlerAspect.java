@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.taubel.budget.exceptions.BudgetNotFoundException;
-import com.taubel.budget.exceptions.LineItemAlreadyExistsException;
 import com.taubel.budget.exceptions.NullFieldNotAllowedException;
-import com.taubel.budget.exceptions.TransactionAlreadyExistsException;
+import com.taubel.budget.exceptions.ResourceAlreadyExistsException;
 import com.taubel.budget.exceptions.TransactionDoesNotExistException;
 import com.taubel.budget.exceptions.UserAlreadyExistsException;
 import com.taubel.budget.exceptions.UserNotAllowedException;
@@ -28,11 +27,6 @@ public class ExceptionHandlerAspect {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 
-    @ExceptionHandler(TransactionAlreadyExistsException.class)
-    public ResponseEntity<Object> TransactionAlreadyExistsHandler(HttpServletRequest request, TransactionAlreadyExistsException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
-    }
-
     @ExceptionHandler(TransactionDoesNotExistException.class)
     public ResponseEntity<Object> TransactionDoesNotExistHandler(HttpServletRequest request, TransactionDoesNotExistException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
@@ -48,8 +42,8 @@ public class ExceptionHandlerAspect {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
-    @ExceptionHandler(LineItemAlreadyExistsException.class)
-    public ResponseEntity<Object> LineItemAlreadyExistsHandler(HttpServletRequest request, LineItemAlreadyExistsException ex) {
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    public ResponseEntity<Object> LineItemAlreadyExistsHandler(HttpServletRequest request, ResourceAlreadyExistsException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 

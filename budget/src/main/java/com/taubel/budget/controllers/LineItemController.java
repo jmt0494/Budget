@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taubel.budget.Dtos.LineItemDto;
-import com.taubel.budget.exceptions.LineItemAlreadyExistsException;
+import com.taubel.budget.exceptions.ResourceAlreadyExistsException;
 import com.taubel.budget.exceptions.NullFieldNotAllowedException;
 import com.taubel.budget.services.LineItemService;
 
@@ -35,7 +35,7 @@ public class LineItemController {
     
     @PostMapping()
     public ResponseEntity<LineItemDto> createNewLineItem(@PathVariable("username") String username, @RequestBody LineItemDto lineItem) {
-        if (lineItem.getId() != null) throw new LineItemAlreadyExistsException("LineItem " + lineItem.getId() + " already exists");
+        if (lineItem.getId() != null) throw new ResourceAlreadyExistsException("LineItem " + lineItem.getId() + " already exists");
         LineItemDto updatedLineItem = lineItemServ.updateCreateLineItem(lineItem, username);
         return ResponseEntity.ok(updatedLineItem);
     }
