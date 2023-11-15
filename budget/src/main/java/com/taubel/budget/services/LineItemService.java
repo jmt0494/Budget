@@ -45,7 +45,7 @@ public class LineItemService {
 
     public LineItemDto updateCreateLineItem(LineItemDto lineItemDto, String username) {
         User user = userService.findByUsername(username);
-        if (user.getId() != lineItemDto.getUserId()) throw new UserNotAllowedException(username + " does not own lineitem " + lineItemDto.getId());
+        if (user.getId() != lineItemDto.getUserId()) throw new UserNotAllowedException(username + " does not own that lineitem");
 
         Category category = catRepo.getReferenceById(lineItemDto.getCategoryId());
         

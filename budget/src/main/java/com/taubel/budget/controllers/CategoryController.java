@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taubel.budget.Dtos.CategoryDto;
+import com.taubel.budget.exceptions.NullFieldNotAllowedException;
 import com.taubel.budget.exceptions.ResourceAlreadyExistsException;
 import com.taubel.budget.services.CategoryService;
 
@@ -34,17 +35,21 @@ public class CategoryController {
 
     @PostMapping()
     public ResponseEntity<CategoryDto> createNewCategory(@PathVariable("username") String username, @RequestBody CategoryDto category) {   
-        if (category.getId() != null) throw new ResourceAlreadyExistsException("ID field should be null");
-        return ResponseEntity.ok(new CategoryDto()); //TODO
+        if (category.getId() != null) throw new ResourceAlreadyExistsException("ID field not allowed");
+        CategoryDto newCategory = categoryService.updateCreateCategory(category, username);
+        return ResponseEntity.ok(newCategory);
     }
 
     @PutMapping()
     public ResponseEntity<CategoryDto> updateCategory(@PathVariable("username") String username, @RequestBody CategoryDto category) {
-        return ResponseEntity.ok(new CategoryDto()); //TODO
+        if (category.getId() == null) throw new NullFieldNotAllowedException("Category is missing an ID");
+        CategoryDto updatedCategory = categoryService.updateCreateCategory(category, username);
+        return ResponseEntity.ok(updatedCategory);
     }
 
     @DeleteMapping("/{category}")
     public ResponseEntity<CategoryDto> deleteCategory(@PathVariable("username") String username, @PathVariable("category") long categoryId) {
-        return ResponseEntity.ok(null); //TODO
+        categoryService.deleteCategory(categoryId, username);
+        return ResponseEntity.ok(null);
     }
 }

@@ -15,7 +15,8 @@ VALUES
     (1, 'Groceries', 1),
     (1, 'Utilities', 1),
     (2, 'Entertainment', 2),
-    (3, 'Transportation', 1);
+    (3, 'Transportation', 1),
+    (1, 'debt', 1);
 
 INSERT INTO Line_Items (category_id, name, budgeted_amount, user_id)
 VALUES

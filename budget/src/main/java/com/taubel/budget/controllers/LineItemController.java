@@ -35,9 +35,9 @@ public class LineItemController {
     
     @PostMapping()
     public ResponseEntity<LineItemDto> createNewLineItem(@PathVariable("username") String username, @RequestBody LineItemDto lineItem) {
-        if (lineItem.getId() != null) throw new ResourceAlreadyExistsException("LineItem " + lineItem.getId() + " already exists");
-        LineItemDto updatedLineItem = lineItemServ.updateCreateLineItem(lineItem, username);
-        return ResponseEntity.ok(updatedLineItem);
+        if (lineItem.getId() != null) throw new ResourceAlreadyExistsException("ID field not allowed");
+        LineItemDto newLineItem = lineItemServ.updateCreateLineItem(lineItem, username);
+        return ResponseEntity.ok(newLineItem);
     }
 
     @PutMapping()
