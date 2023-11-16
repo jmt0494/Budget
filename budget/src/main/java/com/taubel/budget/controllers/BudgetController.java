@@ -36,8 +36,9 @@ public class BudgetController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<BudgetDto> deleteBudget(@PathVariable("username") String username, @PathVariable("id") Long id) {
-        return ResponseEntity.ok(null); //TODO
+    public ResponseEntity<String> deleteBudget(@PathVariable("username") String username, @PathVariable("id") Long id) {
+        budgetService.deleteBudget(id, username);
+        return ResponseEntity.ok("Budget deleted");
     }
 
 
