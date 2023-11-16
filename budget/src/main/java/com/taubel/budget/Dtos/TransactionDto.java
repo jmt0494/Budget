@@ -24,7 +24,7 @@ public class TransactionDto {
     
     private Long id;
 
-    private double amount;
+    private Double amount;
 
     private String merchant;
 

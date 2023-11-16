@@ -48,7 +48,7 @@ public class LineItemController {
     }
 
     @DeleteMapping("/{lineitem}")
-    public ResponseEntity<LineItemDto> deleteLineItem(@PathVariable("username") String username, @PathVariable("lineitem") long lineItemId) {
+    public ResponseEntity<LineItemDto> deleteLineItem(@PathVariable("username") String username, @PathVariable("lineitem") Long lineItemId) {
         lineItemServ.deleteLineItem(lineItemId, username);
         return ResponseEntity.ok(null);
     }

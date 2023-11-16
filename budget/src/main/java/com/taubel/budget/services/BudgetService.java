@@ -31,6 +31,10 @@ public class BudgetService {
         return dtos;
     }
 
+    public void deleteBudget(Long id, String username) {
+        
+    }
+
     
     protected Budget findByIdAndUser(Long id, User user) {
         Optional<Budget> optionalBudget = budgetRepo.findByIdAndUser(id, user);

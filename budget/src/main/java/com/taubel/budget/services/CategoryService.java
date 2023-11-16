@@ -25,7 +25,7 @@ public class CategoryService {
     @Autowired
     private UserService userService;
 
-    public List<CategoryDto> getCategorysByBudget(String username, long budgetId) {
+    public List<CategoryDto> getCategorysByBudget(String username, Long budgetId) {
         User user = userService.findByUsername(username);
         Budget budget = budgetService.findByIdAndUser(budgetId, user);
 
@@ -57,7 +57,7 @@ public class CategoryService {
         return new CategoryDto(category);
     }
 
-    public void deleteCategory(long categoryId, String username) {
+    public void deleteCategory(Long categoryId, String username) {
         Optional<Category> category = categoryRepo.findById(categoryId); 
 
         if (category.isPresent()) {

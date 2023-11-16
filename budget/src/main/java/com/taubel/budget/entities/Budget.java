@@ -32,6 +32,6 @@ public class Budget {
     private Month month;
 
     @Column(name = "year", nullable = false)
-    private int year;
+    private Short year;
 
 }

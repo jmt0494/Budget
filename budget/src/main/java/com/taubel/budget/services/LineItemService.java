@@ -62,7 +62,7 @@ public class LineItemService {
         return new LineItemDto(updatededLineItem);
     }
 
-    public void deleteLineItem(long lineItemId, String username) {
+    public void deleteLineItem(Long lineItemId, String username) {
         Optional<LineItem> lineItem = lineItemRepo.findById(lineItemId);
         
         if(lineItem.isPresent()) {

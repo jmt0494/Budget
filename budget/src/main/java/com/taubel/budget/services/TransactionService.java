@@ -114,7 +114,7 @@ public class TransactionService {
     }
 
     
-    public void deleteTransaction(long transId, String username) {
+    public void deleteTransaction(Long transId, String username) {
         Optional<Transaction> trans = transRepo.findById(transId);
         
         if (trans.isPresent()){

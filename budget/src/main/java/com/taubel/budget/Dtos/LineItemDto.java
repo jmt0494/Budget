@@ -23,7 +23,7 @@ public class LineItemDto {
 
     private String name;
 
-    private double budgetedAmount;
+    private Double budgetedAmount;
 
     private Long userId;
 

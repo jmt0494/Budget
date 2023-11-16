@@ -23,7 +23,7 @@ public class BudgetDto {
 
     private Month month;
 
-    private int year;
+    private Short year;
 
     private Long userId;
 
