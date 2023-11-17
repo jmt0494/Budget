@@ -38,7 +38,7 @@ public class BudgetController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteBudget(@PathVariable("username") String username, @PathVariable("id") Long id) {
         budgetService.deleteBudget(id, username);
-        return ResponseEntity.ok("Budget deleted");
+        return ResponseEntity.ok("Budget " + id + " deleted.");
     }
 
 
