@@ -7,7 +7,7 @@ VALUES
 INSERT INTO Budgets (user_id, month, year)
 VALUES
     (1, 'Jan', 2023),
-    (1, 'Feb', 2023),
+    (1, 'Feb', 2022),
     (2, 'Jan', 2023);
 
 INSERT INTO Categories (budget_id, name, user_id)

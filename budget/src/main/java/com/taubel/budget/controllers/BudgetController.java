@@ -32,7 +32,8 @@ public class BudgetController {
     
     @PostMapping()
     public ResponseEntity<BudgetDto> createBudget(@PathVariable("username") String username, @RequestBody BudgetDto budget) {
-        return ResponseEntity.ok(new BudgetDto()); //TODO
+        BudgetDto newBudget = budgetService.createNewBudgetAndDependents(username, budget);
+        return ResponseEntity.ok(newBudget);
     }
 
     @DeleteMapping("/{id}")
