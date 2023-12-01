@@ -122,7 +122,37 @@ public class BudgetService {
     }
     
     private void addDefaultDependants(Budget budget) {
-        //TODO
+        Map<String, String[]> categoryAndLineItems = new HashMap<>();
+        String[] incomeLineItems = new String[] {"Paycheck 1", "Paycheck 2"};
+        String[] givingLineItems = new String[] {"Church"};
+        String[] housingLineItems = new String[] {"Rent/Mortage", "Water", "Electric", "Gas", "Trash"};
+        String[] transportationLineItems = new String[] {"Gas", "Maintenance"};
+        String[] lifeStyleLineItems = new String[] {"Fun Money", "Misc"};
+        String[] foodLineItems = new String[] {"Groceries", "Resturants"};
+
+        categoryAndLineItems.put("Income", incomeLineItems);
+        categoryAndLineItems.put("Giving", givingLineItems);
+        categoryAndLineItems.put("Housing", housingLineItems);
+        categoryAndLineItems.put("Transportation", transportationLineItems);
+        categoryAndLineItems.put("Line Style", lifeStyleLineItems);
+        categoryAndLineItems.put("Food", foodLineItems);
+
+        for (String catName : categoryAndLineItems.keySet()) {
+            Category newCategory = new Category();
+            newCategory.setBudget(budget);
+            newCategory.setName(catName);
+            newCategory.setUser(budget.getUser());
+            newCategory = categoryRepo.save(newCategory);
+
+            for(String lIName : categoryAndLineItems.get(catName)) {
+                LineItem newLineItem = new LineItem();
+                newLineItem.setBudgetedAmount(0);
+                newLineItem.setCategory(newCategory);
+                newLineItem.setName(lIName);
+                newLineItem.setUser(budget.getUser());
+                lineItemRepo.save(newLineItem);
+            }
+        }
     }
     
 private void copyBudgetDependents(Budget oldBudget, Budget newBudget) {

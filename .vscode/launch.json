@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BudgetApplication<budget>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.taubel.budget.BudgetApplication",
+            "projectName": "budget",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
