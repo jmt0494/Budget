@@ -1,6 +1,6 @@
 <mat-card class="login">
+    <div class="centered">
     <mat-card-title>Login</mat-card-title>
-    <div class="example-container" layout="column" layout-align="center center">
       <mat-form-field #username>
         <mat-label>Enter your username</mat-label>
         <input matInput placeholder="Josh123" [formControl]="loginForm" required>
@@ -9,7 +9,7 @@
         <mat-label>Enter your password</mat-label>
         <input type="password" matInput placeholder="password" [formControl]="loginForm" required>
       </mat-form-field>
+      <button mat-raised-button color="primary">Submit</button>
     </div>
-    <button mat-raised-button color="primary">Submit</button>
   </mat-card>
   

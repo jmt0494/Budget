@@ -14,6 +14,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 
 import { UnassignedTransactionsComponent } from './components/unassigned-transactions/unassigned-transactions.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     LayoutModule,
     DragDropModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
