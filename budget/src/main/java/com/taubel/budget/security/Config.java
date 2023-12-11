@@ -19,11 +19,9 @@ public class Config {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-        .csrf(customizer -> customizer.disable())
-        .cors(customizer -> customizer.disable())
         .authorizeHttpRequests(authCustomizer -> authCustomizer
-            .requestMatchers("/user/register").permitAll() // Allow unauthenticated access to /user/register
-            .anyRequest().authenticated() // Require authentication for all other requests
+            .requestMatchers("/user/register").permitAll()
+            .anyRequest().authenticated() 
         );
         http.httpBasic(Customizer.withDefaults());
         return http.build();

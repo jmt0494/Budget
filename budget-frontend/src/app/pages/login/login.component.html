@@ -1,15 +1,15 @@
 <mat-card class="login">
-    <div class="centered">
+    <form class="centered" [formGroup]="loginForm">
     <mat-card-title>Login</mat-card-title>
       <mat-form-field #username>
         <mat-label>Enter your username</mat-label>
-        <input matInput placeholder="Josh123" [formControl]="loginForm" required>
+        <input matInput placeholder="Josh123" formControlName="username" required>
       </mat-form-field>
       <mat-form-field #password>
         <mat-label>Enter your password</mat-label>
-        <input type="password" matInput placeholder="password" [formControl]="loginForm" required>
+        <input type="password" matInput placeholder="password" formControlName="password" required>
       </mat-form-field>
-      <button mat-raised-button color="primary">Submit</button>
-    </div>
+      <button mat-raised-button color="primary" (click)="login()">Submit</button>
+    </form>
   </mat-card>
   

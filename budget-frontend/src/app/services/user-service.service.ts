@@ -1,4 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { environment } from 'src/environments/environment';
@@ -6,7 +8,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class UserServiceService {
+export class UserService {
 
   url = environment.baseUrl + "/user/"
 
@@ -14,11 +16,28 @@ export class UserServiceService {
 
   user?: User
 
+  password?: string
+
+  username?: string
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
+
   constructor(private http: HttpClient) { }
 
-  // authenticate(username: string, password: string) {
-  //   this.http.get(url + username)
-  // }
+  getUser():Observable<User> {
+    return this.http.get<User>(`${this.url}${this.username}`)
+    .pipe(catchError(this.handleError));
+  }
 
+  private handleError(httpError: HttpErrorResponse) {
+    if (httpError.error instanceof ErrorEvent) {
+      console.log('An error has occured: ', httpError.error.message);
+    } else {
+      console.error();
+    }
 
+    return throwError(() => new Error('something went wrong'));
+  }
 }
