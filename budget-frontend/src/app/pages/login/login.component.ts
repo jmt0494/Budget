@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user-service.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { UserService } from 'src/app/services/user-service.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -24,11 +25,12 @@ export class LoginComponent implements OnInit {
     this.userService.username = this.loginForm.controls.username.value!;
     this.userService.password = this.loginForm.controls.password.value!;
 
-    console.log(this.userService.username);
-
     this.userService.getUser().subscribe((user) => {
       this.userService.user=user;
-      console.log(user.email);
+      if (this.userService.user) {
+        console.log(user.username);
+        this.router.navigateByUrl("/budget")
+      }
     });
 
   }

@@ -1,5 +1,5 @@
 // TypeScript Enum
-enum Month {
+export enum Month {
     Jan = 'Jan',
     Feb = 'Feb',
     Mar = 'Mar',

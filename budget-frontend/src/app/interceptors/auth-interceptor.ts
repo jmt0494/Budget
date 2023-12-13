@@ -1,6 +1,6 @@
 // auth.interceptor.ts
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UserService } from '../services/user-service.service';
 
@@ -10,16 +10,15 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor (private userService: UserService) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        console.log("intercepted")
     const username = this.userService.username;
     const password = this.userService.password;
 
-    const base64Credentials = btoa(`${username}:${password}`);
-
-    const authRequest = request.clone({
-        setHeaders: {
-        Authorization: `Basic ${base64Credentials}`
-        }
+    const headers = new HttpHeaders({
+        Authorization: `Basic ${btoa(`${username}:${password}`)}`
     });
+
+    const authRequest = request.clone({ headers });
 
     return next.handle(authRequest);
     }

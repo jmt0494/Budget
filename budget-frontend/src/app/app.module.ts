@@ -16,13 +16,15 @@ import { UnassignedTransactionsComponent } from './components/unassigned-transac
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
+import { BudgetComponent } from './pages/budget/budget.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     NavComponent,
-    UnassignedTransactionsComponent
+    UnassignedTransactionsComponent,
+    BudgetComponent
   ],
   imports: [
     BrowserModule,

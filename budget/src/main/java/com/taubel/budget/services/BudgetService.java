@@ -43,7 +43,7 @@ public class BudgetService {
 
     public List<BudgetDto> findBudgetsByUsername(String Username) {
         User user = userService.findByUsername(Username);
-        List<Budget> budgets = budgetRepo.findAllByUser(user);
+        List<Budget> budgets = budgetRepo.findAllSortedByYearAndMonthForUser(user);
         List<BudgetDto> dtos = budgets.stream()
             .map(BudgetDto::new)
             .toList();

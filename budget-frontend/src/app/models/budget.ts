@@ -1,3 +1,6 @@
+import { Month } from "../enums/month"
+
+
 export class Budget { 
     id: number
     month: Month

@@ -16,7 +16,7 @@ import com.taubel.budget.entities.User;
 import com.taubel.budget.services.UserService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+
 @RequestMapping("user")
 public class UserController {
     

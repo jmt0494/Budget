@@ -1,5 +1,6 @@
 .login {
     width: 40%;
+    max-width: 300px;
     margin-left: 30%;
     margin-top: 10rem;
     height: 20rem;
@@ -23,7 +24,9 @@
 @media screen and (max-width: 800px) {
     .login {
         width: 100%;
+        max-width: 600px;
         margin-left: 0px;
         margin-top: 0px;
+        height: 100%;
     }
 }
