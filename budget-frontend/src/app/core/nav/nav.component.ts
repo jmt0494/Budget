@@ -1,9 +1,9 @@
-import { BudgetService } from 'src/app/services/budget.service';
-import { Component } from '@angular/core';
+import { BudgetService } from 'src/app/shared/services/budget.service';
+import { Component, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { Budget } from 'src/app/models/budget';
+import { Budget } from 'src/app/features/budget/data/models/budget';
 
 @Component({
   selector: 'app-nav',
@@ -25,5 +25,10 @@ export class NavComponent {
   ngOnInit(): void {
     this.budgetList = this.budgetService.budgetList;
   }
+  
+  // ngDoCheck() {
+  //   console.log("Checked")
+  //   this.budgetList = this.budgetService.budgetList;
+  // }
 
 }

@@ -1,6 +1,6 @@
-import { UserService } from 'src/app/services/user-service.service';
+import { UserService } from 'src/app/shared/services/user-service.service';
 import { Injectable } from '@angular/core';
-import { Budget } from '../models/budget';
+import { Budget } from '../../features/budget/data/models/budget';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
