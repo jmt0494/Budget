@@ -5,7 +5,7 @@ import { BudgetService } from 'src/app/shared/services/budget.service';
 @Component({
   selector: 'app-budget',
   templateUrl: './budget.component.html',
-  styleUrls: ['./budget.component.css']
+  styleUrls: ['./budget.component.scss']
 })
 export class BudgetComponent implements OnInit {
 

@@ -8,7 +8,7 @@ import { Budget } from 'src/app/features/budget/data/models/budget';
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  styleUrls: ['./nav.component.scss']
 })
 export class NavComponent {
 
