@@ -9,22 +9,6 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
-$custome-teal-contrast: (
-  50: rgba(black, 0.87),
-  100: rgba(black, 0.87),
-  200: rgba(black, 0.87),
-  300: rgba(black, 0.87),
-  400: rgba(black, 0.87),
-  500: white,
-  600: white,
-  700: white,
-  800: white,
-  900: white,
-  A100: rgba(black, 0.87),
-  A200: rgba(black, 0.87),
-  A300: rgba(black, 0.87),
-  A400: rgba(black, 0.87)
-);
 
 $custom-teal-palette: (
   50: #EAF1F1,
@@ -41,24 +25,22 @@ $custom-teal-palette: (
   A200: #6FFFFF,
   A300: #3CFFFF,
   A400: #23FFFF,
-  contrast: $custome-teal-contrast
-);
-
-$custom-red-contrast: (
-  50: rgba(black, 0.87),
-  100: rgba(black, 0.87),
-  200: rgba(black, 0.87),
-  300: rgba(black, 0.87),
-  400: white,
-  500: white,
-  600: white,
-  700: white,
-  800: white,
-  900: white,
-  A100: rgba(black, 0.87),
-  A200: rgba(black, 0.87),
-  A300: white,
-  A400: white
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A300: rgba(black, 0.87),
+    A400: rgba(black, 0.87)
+  )
 );
 
 $custom-red-palette: (
@@ -76,7 +58,22 @@ $custom-red-palette: (
   A200: #FF797D,
   A300: #FF464B,
   A400: #FF2C32,
-  contrast: $custom-red-contrast
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A300: white,
+    A400: white
+  )
 );
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
