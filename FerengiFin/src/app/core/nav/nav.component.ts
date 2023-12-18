@@ -23,12 +23,9 @@ export class NavComponent {
   constructor(private breakpointObserver: BreakpointObserver, private budgetService: BudgetService) {}
 
   ngOnInit(): void {
-    this.budgetList = this.budgetService.budgetList;
+    this.budgetService.budgetList$?.subscribe(budgets =>{
+      this.budgetList = budgets;
+    });
   }
-  
-  // ngDoCheck() {
-  //   console.log("Checked")
-  //   this.budgetList = this.budgetService.budgetList;
-  // }
 
 }

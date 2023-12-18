@@ -1,3 +1,4 @@
+import { BudgetService } from 'src/app/shared/services/budget.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,7 +11,7 @@ import { UserService } from 'src/app/shared/services/user-service.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router, private budgetService: BudgetService) { }
 
   ngOnInit(): void {
   }
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit {
     this.userService.getUser().subscribe((user) => {
       this.userService.user=user;
       if (this.userService.user) {
-        console.log(user.username);
+        this.budgetService.setBudgetList();
         this.router.navigateByUrl("/budget")
       }
     });
