@@ -21,7 +21,7 @@ public interface BudgetRepository extends JpaRepository<Budget, Long>{
 
     @Query(value = "SELECT * FROM budgets " +
                    "WHERE user_id = :#{#user.id} " +
-                   "ORDER BY year DESC, " +
+                   "ORDER BY year ASC, " +
                    "CASE " +
                    "    WHEN month = 'Dec' THEN 1 " +
                    "    WHEN month = 'Nov' THEN 2 " +
