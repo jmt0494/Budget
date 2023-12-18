@@ -95,9 +95,21 @@ $FerengiFin-theme: mat.define-dark-theme((
   )
 ));
 
+$FerengiFin-light-theme: mat.define-light-theme((
+  color: (
+    primary: $FerengiFin-primary,
+    accent: $FerengiFin-accent,
+    warn: $FerengiFin-warn,
+  )
+));
+
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($FerengiFin-theme);
+@include mat.all-component-themes($FerengiFin-light-theme);
+
+.dark-theme {
+  @include mat.all-component-themes($FerengiFin-theme);
+}
 
 /* You can add global styles to this file, and also import other style files */
