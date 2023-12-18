@@ -18,8 +18,30 @@
 
 .logo {
   width: 60px;
+  padding: 10px;
 }
 
-.slogan{
+.banner-text{
   padding-left: 10px;
+  padding-top: 10px;
+  
+}
+
+.title {
+  color: #A6212C;
+}
+
+.menu-toggle-button {
+  background-color: #85AFAF;
+}
+
+@media screen and (max-width: 800px) {
+  .slogan {
+    display: none;
+  }
+
+  .banner-text {
+    padding-top: none;
+    padding-bottom: 10px;
+  }
 }

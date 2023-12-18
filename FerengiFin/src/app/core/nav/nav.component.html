@@ -15,11 +15,15 @@
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
+        *ngIf="isHandset$ | async"
+        class="menu-toggle-button">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <img class="logo" src="assets/ferengi-logo-gold.png">
-      <span class="slogan">FerengiFin: Rule of Aquisition 217: Always know what you're buying.</span>
+      <span class="banner-text">
+        <h1 class="title"><em>FerengiFin</em></h1>
+        <p class="slogan">Rule of Acquisition 217: Always know what you're buying.</p>
+      </span>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
