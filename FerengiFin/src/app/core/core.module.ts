@@ -6,11 +6,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppRoutingModule } from '../routing.module';
 import { NavComponent } from './nav/nav.component';
+import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 
 
 
 @NgModule({
-  declarations: [NavComponent],
+  declarations: [NavComponent, NotFoundPageComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
