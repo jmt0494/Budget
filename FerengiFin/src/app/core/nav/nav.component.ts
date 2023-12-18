@@ -12,7 +12,7 @@ import { Budget } from 'src/app/features/budget/data/models/budget';
 })
 export class NavComponent {
 
-  budgetList?: Budget[]
+  budgetList: Budget[] = [];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(

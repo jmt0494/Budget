@@ -5,6 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { throwError, Observable, BehaviorSubject } from 'rxjs';
+import { Month } from 'src/app/features/budget/data/enums/month';
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +16,15 @@ export class BudgetService {
 
   budgetList$ = this.budgetListSubject.asObservable();
 
+  currentBudgetSubject: BehaviorSubject<Budget> =new BehaviorSubject<Budget>(new Budget(0, Month.Jan, 0, 0));
+
+  currentBudget$ = this.currentBudgetSubject?.asObservable();
+
   constructor(private http: HttpClient, private userService: UserService) {}
 
   setBudgetList() {
     this.fetchBudgetList().subscribe(budgets =>{
+      this.currentBudgetSubject.next(budgets[0])
       this.budgetListSubject?.next(budgets);
     })
   }

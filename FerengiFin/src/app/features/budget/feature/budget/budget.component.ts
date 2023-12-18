@@ -9,11 +9,14 @@ import { BudgetService } from 'src/app/shared/services/budget.service';
 })
 export class BudgetComponent implements OnInit {
 
-  
+  currentBudget?: Budget;
 
   constructor(private budgetService: BudgetService) { }
 
   ngOnInit(): void {
+    this.budgetService.currentBudget$.subscribe(budget => {
+      this.currentBudget = budget
+    })
   }
 
 }
