@@ -8,7 +8,7 @@ import { AppRoutingModule } from './routing.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { AuthInterceptor } from './core/interceptors/auth-interceptor';
-import { BudgetModule } from './features/budget/feature/budget-shell/budget.module';
+import { BudgetModule } from './features/budget/budget-shell/budget.module';
 import { LoginModule } from './features/login/feature/login.module';
 
 @NgModule({
