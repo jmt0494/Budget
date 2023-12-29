@@ -1,7 +1,11 @@
 package com.taubel.budget.security.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,20 +17,35 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.taubel.budget.security.filters.JwtAuthorizationFilter;
+import com.taubel.budget.security.filters.UsernamePasswordFilter;
+
 @Configuration
 @EnableWebSecurity(debug = true)
 @EnableMethodSecurity
 public class Config {
 
+    @Value("${secret.key:sectretKey}")
+    private String secrect;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-        // .csrf(customizer -> customizer.disable())
-        .cors(customizer -> customizer.configurationSource(corsConfigurationSource()))
-        .authorizeHttpRequests(authCustomizer -> authCustomizer
-            .requestMatchers("/user/register").permitAll() // Allow unauthenticated access to /user/register
-            .anyRequest().authenticated() // Require authentication for all other requests
-        );
+                .csrf(customizer -> customizer.disable())
+                .cors(customizer -> customizer.configurationSource(corsConfigurationSource()))
+                .authorizeHttpRequests(authCustomizer -> authCustomizer
+                        .requestMatchers(HttpMethod.POST,
+                                "/user/register",
+                                "user/login",
+                                "/error")
+                        .permitAll()
+                        .anyRequest().authenticated())
+                .addFilterBefore(new UsernamePasswordFilter(authenticationManager, passwordEncoder(), secrect),
+                        JwtAuthorizationFilter.class)
+                .addFilter(new JwtAuthorizationFilter(authenticationManager, secrect));
         http.httpBasic(Customizer.withDefaults());
         return http.build();
     }
@@ -45,9 +64,8 @@ public class Config {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
 }
-

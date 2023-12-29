@@ -21,34 +21,40 @@ import com.taubel.budget.services.CategoryService;
 
 @RestController
 @RequestMapping("/{username}/category")
-@PreAuthorize("#username == authentication.principal.username")
+@PreAuthorize("#username == authentication.getPrincipal()")
 public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
 
-        @GetMapping("/{budget}")
-    public ResponseEntity<List<CategoryDto>> getCategorysByBudget (@PathVariable("username") String username, @PathVariable("budget") Long budgetId){
+    @GetMapping("/{budget}")
+    public ResponseEntity<List<CategoryDto>> getCategorysByBudget(@PathVariable("username") String username,
+            @PathVariable("budget") Long budgetId) {
         List<CategoryDto> categories = categoryService.getCategorysByBudget(username, budgetId);
         return ResponseEntity.ok(categories);
     }
 
     @PostMapping()
-    public ResponseEntity<CategoryDto> createNewCategory(@PathVariable("username") String username, @RequestBody CategoryDto category) {   
-        if (category.getId() != null) throw new ResourceAlreadyExistsException("ID field not allowed");
+    public ResponseEntity<CategoryDto> createNewCategory(@PathVariable("username") String username,
+            @RequestBody CategoryDto category) {
+        if (category.getId() != null)
+            throw new ResourceAlreadyExistsException("ID field not allowed");
         CategoryDto newCategory = categoryService.updateCreateCategory(category, username);
         return ResponseEntity.ok(newCategory);
     }
 
     @PutMapping()
-    public ResponseEntity<CategoryDto> updateCategory(@PathVariable("username") String username, @RequestBody CategoryDto category) {
-        if (category.getId() == null) throw new NullFieldNotAllowedException("Category is missing an ID");
+    public ResponseEntity<CategoryDto> updateCategory(@PathVariable("username") String username,
+            @RequestBody CategoryDto category) {
+        if (category.getId() == null)
+            throw new NullFieldNotAllowedException("Category is missing an ID");
         CategoryDto updatedCategory = categoryService.updateCreateCategory(category, username);
         return ResponseEntity.ok(updatedCategory);
     }
 
     @DeleteMapping("/{category}")
-    public ResponseEntity<String> deleteCategory(@PathVariable("username") String username, @PathVariable("category") Long categoryId) {
+    public ResponseEntity<String> deleteCategory(@PathVariable("username") String username,
+            @PathVariable("category") Long categoryId) {
         categoryService.deleteCategory(categoryId, username);
         return ResponseEntity.ok("Category " + categoryId + " deleted.");
     }

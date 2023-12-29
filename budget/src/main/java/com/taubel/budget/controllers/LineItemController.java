@@ -15,40 +15,46 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taubel.budget.Dtos.LineItemDto;
-import com.taubel.budget.exceptions.ResourceAlreadyExistsException;
 import com.taubel.budget.exceptions.NullFieldNotAllowedException;
+import com.taubel.budget.exceptions.ResourceAlreadyExistsException;
 import com.taubel.budget.services.LineItemService;
 
 @RestController
 @RequestMapping("/{username}/lineitem")
-@PreAuthorize("#username == authentication.principal.username")
+@PreAuthorize("#username == authentication.getPrincipal()")
 public class LineItemController {
 
     @Autowired
     private LineItemService lineItemServ;
 
     @GetMapping("/{budget}")
-    public ResponseEntity<List<LineItemDto>> getLineItemsByBudget (@PathVariable("username") String username, @PathVariable("budget") Long budgetId){
+    public ResponseEntity<List<LineItemDto>> getLineItemsByBudget(@PathVariable("username") String username,
+            @PathVariable("budget") Long budgetId) {
         List<LineItemDto> lineItems = lineItemServ.getLineItemsByBudget(username, budgetId);
         return ResponseEntity.ok(lineItems);
     }
-    
+
     @PostMapping()
-    public ResponseEntity<LineItemDto> createNewLineItem(@PathVariable("username") String username, @RequestBody LineItemDto lineItem) {
-        if (lineItem.getId() != null) throw new ResourceAlreadyExistsException("ID field not allowed");
+    public ResponseEntity<LineItemDto> createNewLineItem(@PathVariable("username") String username,
+            @RequestBody LineItemDto lineItem) {
+        if (lineItem.getId() != null)
+            throw new ResourceAlreadyExistsException("ID field not allowed");
         LineItemDto newLineItem = lineItemServ.updateCreateLineItem(lineItem, username);
         return ResponseEntity.ok(newLineItem);
     }
 
     @PutMapping()
-    public ResponseEntity<LineItemDto> updateLineItem(@PathVariable("username") String username, @RequestBody LineItemDto lineItem) {
-        if (lineItem.getId() == null) throw new NullFieldNotAllowedException("LineItem is missing an ID");
+    public ResponseEntity<LineItemDto> updateLineItem(@PathVariable("username") String username,
+            @RequestBody LineItemDto lineItem) {
+        if (lineItem.getId() == null)
+            throw new NullFieldNotAllowedException("LineItem is missing an ID");
         LineItemDto updatedLineItem = lineItemServ.updateCreateLineItem(lineItem, username);
         return ResponseEntity.ok(updatedLineItem);
     }
 
     @DeleteMapping("/{lineitem}")
-    public ResponseEntity<String> deleteLineItem(@PathVariable("username") String username, @PathVariable("lineitem") Long lineItemId) {
+    public ResponseEntity<String> deleteLineItem(@PathVariable("username") String username,
+            @PathVariable("lineitem") Long lineItemId) {
         lineItemServ.deleteLineItem(lineItemId, username);
         return ResponseEntity.ok("Line item " + lineItemId + " deleted.");
     }

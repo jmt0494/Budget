@@ -17,17 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.taubel.budget.Dtos.TransactionDto;
 import com.taubel.budget.services.TransactionService;
 
-
 @RestController
 @RequestMapping("/{username}/transaction")
-@PreAuthorize("#username == authentication.principal.username")
+@PreAuthorize("#username == authentication.getPrincipal()")
 public class TransactionController {
 
     @Autowired
     private TransactionService transService;
 
     @GetMapping("/{budget}")
-    public ResponseEntity<List<TransactionDto>> getTransactionsByBudget(@PathVariable("username") String username, @PathVariable("budget") Long budget) {
+    public ResponseEntity<List<TransactionDto>> getTransactionsByBudget(@PathVariable("username") String username,
+            @PathVariable("budget") Long budget) {
         List<TransactionDto> transactions = transService.findTransactionsByBudget(username, budget);
         return ResponseEntity.ok(transactions);
     }
@@ -37,29 +37,32 @@ public class TransactionController {
         List<TransactionDto> transactions = transService.findTransactionsByUsername(username);
         return ResponseEntity.ok(transactions);
     }
-    
+
     @GetMapping("/unassigned")
     public ResponseEntity<List<TransactionDto>> getUnassignedTransactions(@PathVariable("username") String username) {
         List<TransactionDto> transactions = transService.findUnassigedTransactions(username);
-        return ResponseEntity.ok(transactions); 
+        return ResponseEntity.ok(transactions);
     }
 
     @PostMapping()
-    public ResponseEntity<TransactionDto> createNewTransaction(@RequestBody TransactionDto trans, @PathVariable("username") String username) { 
+    public ResponseEntity<TransactionDto> createNewTransaction(@RequestBody TransactionDto trans,
+            @PathVariable("username") String username) {
         TransactionDto newTransaction = transService.createNewTransaction(trans, username);
         return ResponseEntity.ok(newTransaction);
     }
 
     @PutMapping()
-    public ResponseEntity<TransactionDto> updateTransaction(@RequestBody TransactionDto trans, @PathVariable("username") String username) {
+    public ResponseEntity<TransactionDto> updateTransaction(@RequestBody TransactionDto trans,
+            @PathVariable("username") String username) {
         TransactionDto transaction = transService.updateTransaction(trans, username);
         return ResponseEntity.ok(transaction);
     }
 
     @DeleteMapping("/{transaction}")
-    public ResponseEntity<String> deleteTransaction(@PathVariable("transaction") Long transId, @PathVariable("username") String username) {
-         transService.deleteTransaction(transId, username);
-         return ResponseEntity.ok("Transaction " + transId + " deleted.");
+    public ResponseEntity<String> deleteTransaction(@PathVariable("transaction") Long transId,
+            @PathVariable("username") String username) {
+        transService.deleteTransaction(transId, username);
+        return ResponseEntity.ok("Transaction " + transId + " deleted.");
     }
 
 }

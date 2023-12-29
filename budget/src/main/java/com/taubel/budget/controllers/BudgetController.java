@@ -18,7 +18,7 @@ import com.taubel.budget.services.BudgetService;
 
 @RestController
 @RequestMapping("/{username}/budget")
-@PreAuthorize("#username == authentication.principal.username")
+@PreAuthorize("#username == authentication.getPrincipal()")
 public class BudgetController {
 
     @Autowired
