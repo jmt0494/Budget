@@ -87,13 +87,13 @@ $FerengiFin-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$FerengiFin-theme: mat.define-dark-theme((
-  color: (
-    primary: $FerengiFin-primary,
-    accent: $FerengiFin-accent,
-    warn: $FerengiFin-warn,
-  )
-));
+// $FerengiFin-theme: mat.define-dark-theme((
+//   color: (
+//     primary: $FerengiFin-primary,
+//     accent: $FerengiFin-accent,
+//     warn: $FerengiFin-warn,
+//   )
+// ));
 
 $FerengiFin-light-theme: mat.define-light-theme((
   color: (
@@ -108,8 +108,8 @@ $FerengiFin-light-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($FerengiFin-light-theme);
 
-.dark-theme {
-  @include mat.all-component-themes($FerengiFin-theme);
-}
+// .dark-theme {
+//   @include mat.all-component-themes($FerengiFin-theme);
+// }
 
 /* You can add global styles to this file, and also import other style files */

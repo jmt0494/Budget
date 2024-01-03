@@ -1,11 +1,11 @@
 import { UserService } from 'src/app/shared/services/user-service.service';
 import { Injectable } from '@angular/core';
-import { Budget } from '../../features/budget/data/models/budget';
+import { Budget } from '../models/budget';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { throwError, Observable, BehaviorSubject } from 'rxjs';
-import { Month } from 'src/app/features/budget/data/enums/month';
+import { Month } from 'src/app/shared/enums/month';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class BudgetService {
   }
 
   private fetchBudgetList(): Observable<Budget[]> {
-    return this.http.get<Budget[]>(`${environment.baseUrl}/${this.userService.username}/budget`)
+    return this.http.get<Budget[]>(`${environment.baseUrl}/${this.userService.user.username}/budget`)
     .pipe(catchError(this.handleError));
   }
 

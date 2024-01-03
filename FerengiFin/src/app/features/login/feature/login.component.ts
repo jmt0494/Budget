@@ -1,8 +1,10 @@
+import { RouteGuardService } from 'src/app/shared/services/route-guard.service';
 import { BudgetService } from 'src/app/shared/services/budget.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/shared/services/user-service.service';
+import { Credentials } from '../data/credentials';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +13,7 @@ import { UserService } from 'src/app/shared/services/user-service.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private userService: UserService, private router: Router, private budgetService: BudgetService) { }
+  constructor(private userService: UserService, private router: Router, private budgetService: BudgetService, private routeGuardService: RouteGuardService) { }
 
   ngOnInit(): void {
   }
@@ -23,16 +25,26 @@ export class LoginComponent implements OnInit {
   });
 
   login() {
-    this.userService.username = this.loginForm.controls.username.value!;
-    this.userService.password = this.loginForm.controls.password.value!;
+    const creds = new Credentials(this.loginForm.controls.username.value!, this.loginForm.controls.password.value!)
+    //get token
+    this.userService.login(creds).subscribe(token => {
+      //save token to session storage
+      sessionStorage.setItem("token", `Bearer ${token.token}`)
 
-    this.userService.getUser().subscribe((user) => {
-      this.userService.user=user;
-      if (this.userService.user) {
-        this.budgetService.setBudgetList();
-        this.router.navigateByUrl("/budget")
-      }
-    });
+      //get user data
+      this.userService.loadUser(creds.username).subscribe(user => {
+        this.userService.user = user;
+        this.userService.isAuthenticated = true;
+
+        const redirPath = this.routeGuardService.currentRoute
+          .map(pathSeg => pathSeg.path)
+          .reduce((path, nextSeg) => `${path}/${nextSeg}`);
+
+        //redirect to next page
+        this.router.navigateByUrl(redirPath);
+      })
+    })
+
 
   }
 

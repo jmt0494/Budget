@@ -7,6 +7,5 @@ export class User {
         this.username = username
         this.email = email
         this.id = id
-  }    
-
+  }
 }

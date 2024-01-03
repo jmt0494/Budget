@@ -3,7 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { Budget } from 'src/app/features/budget/data/models/budget';
+import { Budget } from 'src/app/shared/models/budget';
 
 @Component({
   selector: 'app-nav',

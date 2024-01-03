@@ -71,7 +71,9 @@ public class UsernamePasswordFilter extends OncePerRequestFilter {
                 .withExpiresAt(new Date(System.currentTimeMillis() + tokenExpirationDuration))
                 .sign(Algorithm.HMAC512(secret));
 
-        String body = token;
+        String body = "{\"token\": \"" + token + "\"}";
+
+        response.setContentType("application/json");
 
         response.getWriter().write(body);
         response.getWriter().flush();

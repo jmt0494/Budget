@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Budget } from 'src/app/features/budget/data/models/budget';
+import { Budget } from 'src/app/shared/models/budget';
 import { BudgetService } from 'src/app/shared/services/budget.service';
 
 @Component({
@@ -14,6 +14,7 @@ export class BudgetComponent implements OnInit {
   constructor(private budgetService: BudgetService) { }
 
   ngOnInit(): void {
+    this.budgetService.setBudgetList();
     this.budgetService.currentBudget$.subscribe(budget => {
       this.currentBudget = budget
     })

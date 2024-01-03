@@ -11,15 +11,18 @@ export class AuthInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log("intercepted")
-    const username = this.userService.username;
-    const password = this.userService.password;
-
-    const headers = new HttpHeaders({
-        Authorization: `Basic ${btoa(`${username}:${password}`)}`
-    });
-
-    const authRequest = request.clone({ headers });
-
-    return next.handle(authRequest);
+        let authRequest = request;
+        if (request.url != "user/login"){
+            //add token from session storage to request header
+            let token = sessionStorage.getItem("token");
+            if (token) {
+                const headers = new HttpHeaders({
+                    "Authorization": token
+                });
+                authRequest = request.clone({ headers });
+                console.log(authRequest)
+            }
+        }
+        return next.handle(authRequest);
     }
 }

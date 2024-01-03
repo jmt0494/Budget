@@ -1,30 +1,32 @@
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../../features/budget/data/models/user';
+import { User } from '../models/user';
 import { environment } from 'src/environments/environment';
+import { Credentials } from 'src/app/features/login/data/credentials';
+import { Token } from '../models/token';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  url = environment.baseUrl + "/user/"
+  private url = environment.baseUrl + "/user"
 
-  isAuthenticated = false;
+  public user: User = new User("","",NaN);
 
-  user?: User
+  public isAuthenticated = false
 
-  password?: string
-
-  username?: string
-
-  constructor(private http: HttpClient) { }
-
-  getUser():Observable<User> {
-    return this.http.get<User>(`${this.url}${this.username}`)
+  constructor(private http: HttpClient){}
+  
+  public login(creds: Credentials){
+    return this.http.post<Token>(`${this.url}/login`, creds)
     .pipe(catchError(this.handleError));
+  }
+
+  public loadUser(username: String) {
+    return this.http.get<User>(`${this.url}/${username}`)
   }
 
   private handleError(httpError: HttpErrorResponse) {
