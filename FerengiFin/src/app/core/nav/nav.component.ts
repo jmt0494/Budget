@@ -1,4 +1,4 @@
-import { BudgetService } from 'src/app/shared/services/budget.service';
+import { BudgetService } from 'src/app/shared/services/budget/budget.service';
 import { Component, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
@@ -26,6 +26,10 @@ export class NavComponent {
     this.budgetService.budgetList$?.subscribe(budgets =>{
       this.budgetList = budgets;
     });
+  }
+
+  setCurrentBudget(budget: Budget) {
+    this.budgetService.setCurrentBudget(budget);
   }
 
 }

@@ -1,6 +1,6 @@
-import { UserService } from 'src/app/shared/services/user-service.service';
+import { UserService } from 'src/app/shared/services/user/user.service';
 import { Injectable } from '@angular/core';
-import { Budget } from '../models/budget';
+import { Budget } from '../../models/budget';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
@@ -21,6 +21,10 @@ export class BudgetService {
   currentBudget$ = this.currentBudgetSubject?.asObservable();
 
   constructor(private http: HttpClient, private userService: UserService) {}
+
+  setCurrentBudget(budget: Budget) {
+    this.currentBudgetSubject.next(budget);
+  }
 
   setBudgetList() {
     this.fetchBudgetList().subscribe(budgets =>{

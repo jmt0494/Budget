@@ -5,7 +5,7 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list *ngFor="let budget of this.budgetList">
-      <a mat-list-item >{{budget.month}} {{budget.year}}</a>
+      <a mat-list-item (click)="setCurrentBudget(budget)">{{budget.month}} {{budget.year}}</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

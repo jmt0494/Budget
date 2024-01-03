@@ -1,9 +1,9 @@
-import { RouteGuardService } from 'src/app/shared/services/route-guard.service';
-import { BudgetService } from 'src/app/shared/services/budget.service';
+import { RouteGuardService } from 'src/app/shared/services/route-guard/route-guard.service';
+import { BudgetService } from 'src/app/shared/services/budget/budget.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/shared/services/user-service.service';
+import { UserService } from 'src/app/shared/services/user/user.service';
 import { Credentials } from '../data/credentials';
 
 @Component({
