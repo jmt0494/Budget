@@ -1,5 +1,6 @@
 package com.taubel.budget.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.taubel.budget.Dtos.BudgetDto;
+import com.taubel.budget.Dtos.FullPayload.FPBudgetDto;
+import com.taubel.budget.Dtos.FullPayload.FPCategoryDto;
+import com.taubel.budget.Dtos.FullPayload.FPLineItemDto;
+import com.taubel.budget.Dtos.FullPayload.FPTransactionDto;
 import com.taubel.budget.entities.Budget;
 import com.taubel.budget.entities.Category;
 import com.taubel.budget.entities.LineItem;
@@ -39,7 +44,78 @@ public class BudgetService {
     @Autowired
     private UserService userService;
 
+    public FPBudgetDto GetFullPayloadBudget(Long budgetId) {
+        Budget budget = budgetRepo.getReferenceById(budgetId);
+        List<Category> categories = categoryRepo.findCategoryByBudget(budget);
+        List<LineItem> lineItems = lineItemRepo.findLineItemsByBudget(budget);
+        List<Transaction> transactions = transactionRepo.findTransactionsByBudget(budget);
 
+        Map<Long, FPCategoryDto> categoryMap = convertCategoriesToDtoMap(categories);
+        Map<Long, FPLineItemDto> lineItemMap = convertLineItemsToDtoMap(lineItems);
+
+        addTransactionsToLineItemMap(transactions, lineItemMap);
+        addLineItemsMapToCategoryMap(lineItemMap, categoryMap);
+
+        List<FPCategoryDto> categoryDtos = new ArrayList<FPCategoryDto>(categoryMap.values());
+        
+        FPBudgetDto budgetDto = new FPBudgetDto(budget);
+        budgetDto.setCategories(categoryDtos);
+        
+        return budgetDto;
+    }
+
+    private void addLineItemsMapToCategoryMap(Map<Long, FPLineItemDto> lineItemMap, Map<Long, FPCategoryDto> categoryMap) {
+        lineItemMap.forEach((liId, li) -> {
+            FPCategoryDto cat = categoryMap.get(li.getCategoryId());
+            List<FPLineItemDto> categoryLineItems = cat.getLineItems();
+            if (categoryLineItems == null) {
+                categoryLineItems = new ArrayList<>();
+                categoryLineItems.add(li);
+                cat.setLineItems(categoryLineItems);
+            } else {
+                categoryLineItems.add(li);
+            }
+            
+        });
+
+    }
+
+    private void addTransactionsToLineItemMap(List<Transaction> transactions, Map<Long, FPLineItemDto> lineItemMap) {
+        transactions.stream()
+            .map(FPTransactionDto::new)
+            .toList()
+            .forEach(trans -> {
+                FPLineItemDto li = lineItemMap.get(trans.getLineItemId());
+                List<FPTransactionDto> lineItemTransactions = li.getTransactions();
+                if (lineItemTransactions == null) {
+                    lineItemTransactions = new ArrayList<>();
+                    lineItemTransactions.add(trans);
+                    li.setTransactions(lineItemTransactions);
+                } else {
+                    lineItemTransactions.add(trans); 
+                }
+            }
+            );
+    }
+
+    private Map<Long, FPCategoryDto> convertCategoriesToDtoMap(List<Category> categories) {
+        Map<Long, FPCategoryDto> categoryMap = new HashMap<>();
+        categories.stream()
+            .map(FPCategoryDto::new)
+            .toList()
+            .forEach(cat -> categoryMap.put(cat.getId(), cat));
+            
+        return categoryMap;
+    }
+    private Map<Long, FPLineItemDto> convertLineItemsToDtoMap(List<LineItem> lineItem) {
+        Map<Long, FPLineItemDto> lineItemMap = new HashMap<>();
+        lineItem.stream()
+            .map(FPLineItemDto::new)
+            .toList()
+            .forEach(li -> lineItemMap.put(li.getId(), li));
+
+        return lineItemMap;
+    }
 
     public List<BudgetDto> findBudgetsByUsername(String Username) {
         User user = userService.findByUsername(Username);
