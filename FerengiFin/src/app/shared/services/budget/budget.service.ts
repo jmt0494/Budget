@@ -1,5 +1,6 @@
+import { DetailedBudget } from './../../../features/budget/data/detailed-budget';
 import { UserService } from 'src/app/shared/services/user/user.service';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Budget } from '../../models/budget';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -12,6 +13,8 @@ import { Month } from 'src/app/shared/enums/month';
 })
 export class BudgetService {
 
+  url: string = `${environment.baseUrl}/budget`;
+  
   budgetListSubject: BehaviorSubject<Budget[]> = new BehaviorSubject<Budget[]>([]);
 
   budgetList$ = this.budgetListSubject.asObservable();
@@ -26,6 +29,11 @@ export class BudgetService {
     this.currentBudgetSubject.next(budget);
   }
 
+  public getDetailedBudget(id: number): Observable<DetailedBudget>  {
+    return this.http.get<DetailedBudget>(`${this.url}/fullpayload/${id}`)
+    .pipe(catchError(this.handleError));
+  }
+
   setBudgetList() {
     this.fetchBudgetList().subscribe(budgets =>{
       this.currentBudgetSubject.next(budgets[0])
@@ -34,7 +42,7 @@ export class BudgetService {
   }
 
   private fetchBudgetList(): Observable<Budget[]> {
-    return this.http.get<Budget[]>(`${environment.baseUrl}/${this.userService.user.username}/budget`)
+    return this.http.get<Budget[]>(`${this.url}`)
     .pipe(catchError(this.handleError));
   }
 
