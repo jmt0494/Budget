@@ -23,7 +23,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class UsernamePasswordFilter extends OncePerRequestFilter {
 
-    private long tokenExpirationDuration = 3_600_000; // 1 hour
+    //                                         1 hour       1 day      
+    private long tokenExpirationDuration = 36_000_000_000L * 24; 
 
     private String secret;
 

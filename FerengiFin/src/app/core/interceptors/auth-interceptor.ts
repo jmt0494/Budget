@@ -1,27 +1,36 @@
 // auth.interceptor.ts
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, EMPTY, NEVER } from 'rxjs';
 import { UserService } from '../../shared/services/user/user.service';
+import { jwtDecode } from "jwt-decode";
+import { Router } from '@angular/router';
+
+
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-    constructor (private userService: UserService) {}
+    constructor (private userService: UserService, private router: Router) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log("intercepted")
-        let authRequest = request;
-            //add token from session storage to request header
+        let authRequest = request
+        if (!authRequest.url.includes("/user/login")) authRequest = this.addTokenToHeader(authRequest)
+        authRequest = this.addUsernameToUrl(authRequest);
+        return next.handle(authRequest);
+    }
+
+    private addTokenToHeader(request: HttpRequest<any>): HttpRequest<any> {
         let token = sessionStorage.getItem("token");
         if (token) {
+            console.log(Math.floor(Date.now()/1000))
             const headers = new HttpHeaders({
                 "Authorization": token
             });
-            authRequest = request.clone({ headers });
+            request = request.clone({ headers });
         }
-        authRequest = this.addUsernameToUrl(authRequest);
-        return next.handle(authRequest);
+        return request;
     }
 
     private addUsernameToUrl(request: HttpRequest<any>): HttpRequest<any> {
